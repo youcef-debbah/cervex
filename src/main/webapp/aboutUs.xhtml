@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:param name="title" value="#{aboutUs.title}" />
+		<ui:param name="wrapperClass" value="aboutPage" />
+
+		<p:panelGrid columns="2" layout="grid"
+			styleClass="ui-panelgrid-blank mainPage sameRowHeight">
+			<p:panel header="#{aboutUs.whoAreWe}" styleClass="styled">
+				<h:outputText value="#{aboutUs.ourTeam}" />
+			</p:panel>
+
+			<p:panel header="#{aboutUs.fullTitle}" styleClass="styled">
+				<h:outputText value="#{aboutUs.ourEnterprise}" />
+			</p:panel>
+
+			<p:panel header="#{aboutUs .ourPhilosophy}" styleClass="styled">
+				<h:outputText value="#{aboutUs.aboutOurPhilosophy}" />
+			</p:panel>
+
+			<p:panel header="#{aboutUs.whyCervex}" styleClass="styled styledList">
+				<ul>
+					<li><h:outputText value="#{aboutUs.aboutWhyCervex1}" /></li>
+					<li><h:outputText value="#{aboutUs.aboutWhyCervex2}" /></li>
+					<li><h:outputText value="#{aboutUs.aboutWhyCervex3}" /></li>
+				</ul>
+			</p:panel>
+		</p:panelGrid>
+		<p:separator />
+	</ui:composition>
+</h:body>
+</html>

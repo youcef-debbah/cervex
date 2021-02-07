@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:param name="title" value="#{blog.newComments}" />
+
+		<h:outputScript library="js" name="iframeResizer.min.js" />
+
+		<h:form styleClass="notificationListener">
+			<p:panel id="newCommentsPanel" header="#{blog.commentsToValidate}"
+				styleClass="mainPage styled lastElement">
+				<p:blockUI block="newCommentsPanel"
+					trigger="validateButton, deleteButton">
+					<object type="image/svg+xml"
+						data="#{resource['images:cervexLoading.svg']}" width="64"
+						height="64">
+						<h:graphicImage library="images" name="cervexLoading.gif" />
+					</object>
+					<br />
+					<h:outputText value="#{general.loading}" />
+				</p:blockUI>
+
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton id="validateButton" value="#{general.approve}"
+							disabled="#{empty newCommentsView.selectedComment}"
+							update="@(.notificationListener)" icon="fa fa-thumbs-up"
+							actionListener="#{newCommentsView.authorizeComment}" />
+						<p:commandButton id="deleteButton" value="#{general.remove}"
+							disabled="#{empty newCommentsView.selectedComment}"
+							update="@(.notificationListener)" icon="fa fa-trash"
+							actionListener="#{newCommentsView.removeComment}" />
+					</f:facet>
+				</p:toolbar>
+
+				<p:separator />
+
+				<p:dataTable widgetVar="dataTableWV" var="comment"
+					value="#{newCommentsView.newComments}" draggableColumns="true"
+					emptyMessage="#{blog.noPendingComment}" selectionMode="single"
+					styleClass="centered"
+					selection="#{newCommentsView.selectedComment}"
+					rowKey="#{comment.commentID}">
+
+					<p:column width="17">
+						<p:rowToggler />
+					</p:column>
+
+					<p:column headerText="#{general.date}">
+						<h:outputText value="#{comment.date}" />
+					</p:column>
+
+					<p:column headerText="#{userMsg.username}">
+						<h:outputText
+							value="#{empty comment.user? general.anonymous : comment.user.username} " />
+					</p:column>
+
+					<p:column headerText="#{blog.label}">
+						<h:outputText value="#{comment.blog.title}" styleClass="hasID"
+							title="#{comment.commentID}" />
+					</p:column>
+
+					<p:rowExpansion styleClass="autoWidth">
+						<h3>#{blog.comment}:</h3>
+						<iframe src="#{meta.getCommentURI(comment.commentID)}"
+							class="output post commentOutput" />
+						<h:outputScript>iFrameResize({log: true}, '.post')</h:outputScript>
+					</p:rowExpansion>
+
+					<p:ajax event="rowSelect" update="@form" />
+				</p:dataTable>
+			</p:panel>
+			<p:separator />
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

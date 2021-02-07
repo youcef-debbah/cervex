@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:param name="title" value="#{article.business}" />
+		<ui:param name="wrapperClass" value="businessPage" />
+
+		<h:panelGroup styleClass="mainPage" layout="block">
+
+			<p:panel styleClass="center vcenter styled"
+				header="#{article.noDemands}"
+				rendered="#{empty businessManager.applies}">
+				<h:outputText value="#{article.youHaventSentDemandYet}" />
+				<p:link value="#{article.applyFor}" outcome="applyForArticle"
+					styleClass="inlinedLink" />
+				<h:outputText value="#{article.thenGoBackHere}" />
+			</p:panel>
+
+			<ui:repeat var="apply" value="#{businessManager.applies}"
+				varStatus="status">
+				<h:form>
+					<p:panel styleClass="styled centered">
+						<f:facet name="header">
+							#{article.demand}: #{apply.demand.title} (#{apply.demand.demandDate})
+						</f:facet>
+
+						<h3>#{article.demandDescription}</h3>
+						<p:editor value="#{apply.demand.description}" disabled="true"
+							controls="" styleClass="outputEditor" />
+
+						<p:separator />
+
+						<h:panelGroup layout="block"
+							rendered="#{not empty apply.demand.attachedFiles}">
+							<h3>#{article.attachedFiles}</h3>
+							<p:dataTable var="file" value="#{apply.demand.attachedFiles}"
+								styleClass="styledRowByRow">
+
+								<p:column headerText="#{general.fileName}">
+									<h:outputText value="#{file.name}" />
+								</p:column>
+
+								<p:column headerText="#{general.size}">
+									<h:outputText
+										value="#{articleAdministrationManager.formatSize(file.size)}" />
+								</p:column>
+
+								<p:column headerText="#{general.download}">
+									<p:commandButton icon="fa fa-download" ajax="false">
+										<p:fileDownload value="#{meta.asStreamedContent(file)}" />
+									</p:commandButton>
+								</p:column>
+
+							</p:dataTable>
+							<p:separator />
+						</h:panelGroup>
+
+						<h:form>
+							<p:fieldset toggleable="true"
+								collapsed="#{apply.article.new or apply.article.updated}"
+								styleClass="blueGlass" rendered="#{not empty apply.article}">
+								<f:facet name="legend">
+									<h:outputText
+										value="#{article.article}: #{apply.article.articleID}" />
+									<h:outputText value=" #{general.new}" styleClass="newLabel"
+										rendered="#{apply.article.new or apply.article.updated}" />
+								</f:facet>
+
+								<h3>#{article.progress}</h3>
+								<p:progressBar value="#{apply.article.progress}"
+									labelTemplate="{value}%" displayOnly="true" />
+								<h3>#{article.version}</h3>
+								<p>#{apply.article.version}</p>
+
+								<p:ajax
+									listener="#{businessManager.onArticleToggle(apply.article.articleID, apply.article.state)}"
+									event="toggle" update="@form @(.notificationListener)" />
+							</p:fieldset>
+						</h:form>
+
+					</p:panel>
+					<p:separator rendered="#{not status.last}" />
+				</h:form>
+			</ui:repeat>
+		</h:panelGroup>
+
+		<p:separator />
+
+	</ui:composition>
+</h:body>
+</html>

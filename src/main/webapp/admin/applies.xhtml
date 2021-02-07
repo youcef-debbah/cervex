@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:param name="title" value="#{article.allApplies}" />
+		<ui:param name="wrapperClass" value="businessPage" />
+
+		<ui:define name="metadata">
+			<f:metadata>
+				<f:viewParam name="onlyNew"
+					value="#{articleAdministrationManager.onlyNew}" />
+			</f:metadata>
+		</ui:define>
+
+		<h:form styleClass="notificationListener">
+			<p:panel id="demandsPanel" header="#{article.allApplies}"
+				styleClass="mainPage styled lastElement">
+				<p:blockUI block="demandsPanel"
+					trigger="newArticleButton, deleteButton, onlyNewCheckbox">
+					<object type="image/svg+xml"
+						data="#{resource['images:cervexLoading.svg']}" width="64"
+						height="64">
+						<h:graphicImage library="images" name="cervexLoading.gif" />
+					</object>
+					<br />
+					<h:outputText value="#{general.loading}" />
+				</p:blockUI>
+
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton id="newArticleButton" value="#{article.new}"
+							icon="fa fa-plus-circle"
+							disabled="#{empty articleAdministrationManager.selectedApply or not empty articleAdministrationManager.selectedApply.article}"
+							actionListener="#{articleAdministrationManager.newArticle}">
+							<p:ajax event="dialogReturn"
+								listener="#{articleAdministrationManager.onDialogClose}"
+								update="@form" />
+						</p:commandButton>
+						<p:commandButton id="deleteButton" value="#{article.delete}"
+							icon="fa fa-trash"
+							actionListener="#{articleAdministrationManager.openApplyDeleteDialog()}"
+							disabled="#{empty articleAdministrationManager.selectedApply}">
+							<p:ajax event="dialogReturn"
+								listener="#{articleAdministrationManager.onApplyDelete}" update="@form" />
+						</p:commandButton>
+						<h:outputText value="#{article.onlyNewDemands}"
+							styleClass="inlined" />
+						<p:selectBooleanCheckbox id="onlyNewCheckbox"
+							value="#{articleAdministrationManager.onlyNew}">
+							<p:ajax listener="#{articleAdministrationManager.onOnlyNewClick}"
+								update="@form" />
+						</p:selectBooleanCheckbox>
+					</f:facet>
+				</p:toolbar>
+
+				<p:separator />
+
+				<p:dataTable widgetVar="dataTableWV" var="apply"
+					value="#{articleAdministrationManager.applies}"
+					draggableColumns="true" emptyMessage="#{general.noData}"
+					selectionMode="single"
+					selection="#{articleAdministrationManager.selectedApply}"
+					rowKey="#{apply.demand.demandID}" styleClass="centered">
+
+					<p:column width="17">
+						<p:rowToggler />
+					</p:column>
+
+					<p:column headerText="#{general.date}">
+						<h:outputText value="#{apply.demand.demandDate}" />
+						<h:outputText value=" #{general.new}" styleClass="newLabel"
+							rendered="#{apply.demand.new}" />
+					</p:column>
+
+					<p:column headerText="#{article.demandTitle}">
+						<h:outputText value="#{apply.demand.title}" styleClass="hasID"
+							title="#{apply.demand.demandID}" />
+					</p:column>
+
+					<p:column headerText="#{article.demandType}">
+						<h:outputText value="#{apply.demand.type}" />
+					</p:column>
+
+					<p:column headerText="#{userMsg.username}">
+						<h:outputText value="#{apply.user.username} " />
+					</p:column>
+
+					<p:column headerText="#{article.articleCode}">
+						<h:outputText value="#{apply.article.articleID}" />
+					</p:column>
+
+					<p:rowExpansion styleClass="autoWidth">
+						<h:form>
+							<h3>#{article.demandDescription}</h3>
+							<p:editor value="#{apply.demand.description}" disabled="true"
+								controls="" styleClass="outputEditor" />
+
+							<h:panelGroup layout="block"
+								rendered="#{not empty apply.demand.attachedFiles}">
+								<h3>#{general.attachedFiles}</h3>
+								<p:dataTable var="file" value="#{apply.demand.attachedFiles}"
+									styleClass="styledRowByRow">
+
+									<p:column headerText="#{general.fileName}">
+										<h:outputText value="#{file.name}" />
+									</p:column>
+
+									<p:column headerText="#{general.size}" width="75">
+										<h:outputText
+											value="#{articleAdministrationManager.formatSize(file.size)}" />
+									</p:column>
+
+									<p:column headerText="#{general.actions}" width="75">
+										<p:commandButton icon="fa fa-download"
+											styleClass="small wideIcon" ajax="false"
+											title="#{general.download}">
+											<p:fileDownload value="#{meta.asStreamedContent(file)}" />
+										</p:commandButton>
+
+										<p:commandButton icon="fa fa-trash"
+											styleClass="small wideIcon"
+											actionListener="#{articleAdministrationManager.removeFile(file.fileID)}"
+											title="#{general.removeFile}" process="@this" update="@form" />
+									</p:column>
+								</p:dataTable>
+							</h:panelGroup>
+						</h:form>
+					</p:rowExpansion>
+
+					<p:ajax event="rowSelect" update="@(.notificationListener)" />
+				</p:dataTable>
+
+				<p:remoteCommand name="onRowToggle"
+					actionListener="#{articleAdministrationManager.onApplyToggle}"
+					update=":headerForm" />
+			</p:panel>
+			<p:separator />
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

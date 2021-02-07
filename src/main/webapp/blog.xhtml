@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:param name="title" value="#{blog.title}" />
+
+		<ui:define name="metadata">
+			<f:metadata>
+				<f:viewParam name="blog" value="#{blogView.blogID}" />
+			</f:metadata>
+		</ui:define>
+
+		<h:outputScript library="js" name="iframeResizer.min.js" />
+
+		<h:form id="blogForm" styleClass="notificationListener">
+
+			<p:toolbar id="toolbar" styleClass="mainHeader"
+				rendered="#{meta.principalInAdminRole}">
+				<f:facet name="left">
+					<p:button icon="fa fa-edit" value="#{blog.edit}" outcome="newPost"
+						disabled="#{empty blogView.blogID}">
+						<f:param name="draft" value="#{blogView.blogID}" />
+					</p:button>
+					<p:commandButton icon="fa fa-trash" value="#{general.remove}"
+						action="#{blogView.removeBlog}"
+						disabled="#{empty blogView.blogID}"
+						rendered="#{meta.principalInAdminRole}" />
+				</f:facet>
+				<f:facet name="right">
+					<p:button icon="fa fa-arrow-left" value="#{general.goBack}"
+						outcome="posts" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:panel
+				styleClass="#{meta.principalInAdminRole? 'mainBody' : 'mainPage'} whitePanel hasBottomStamp maxContentSize #{blogView.blog.draft? 'yellowHeader yellowBorder yellowState' : ''}"
+				header="#{blogView.blog.title}"
+				rendered="#{not empty blogView.blog}">
+				<iframe src="#{blogView.postURI}" class="output post slowTransition" />
+				<h:panelGroup layout="block" styleClass="relative">
+					<h:outputText value="#{blogView.blog.date}"
+						styleClass="smallHint toLeft bottomStamp" />
+				</h:panelGroup>
+				<f:facet name="footer">
+
+					<h:panelGroup rendered="#{not blogView.blog.draft}">
+						<h:panelGroup layout="block" styleClass="textToLeft blueHint">
+							<h:outputText value="#{blog.addComment}" />
+						</h:panelGroup>
+
+						<p:messages id="newCommentMsgs" for="newComment" showIcon="false"
+							closable="true">
+							<p:effect event="load" type="bounce" />
+						</p:messages>
+
+						<p:separator styleClass="tinySeparator" />
+
+						<h:panelGroup layout="block" styleClass="editor">
+							<pe:ckEditor id="newComment" value="#{blogView.newComment}"
+								width="auto" skin="office2013"
+								language="#{localeManager.language}"
+								toolbar="[['InsertPre', 'Undo', 'Redo', '-',
+							'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
+							'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
+							'TextColor', 'BGColor', 'RemoveFormat',
+							'Styles', 'Format', 'Font', 'FontSize',
+							'NumberedList', 'BulletedList', '-',
+							'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+							'Outdent', 'Indent', '-', 'BidiLtr', 'BidiRtl', '-',
+							'Smiley', 'SpecialChar', 'Image', 'Table', 'CreateDiv', '-',
+							'Blockquote', 'HorizontalRule', 'Link', 'Unlink', '-',
+							'Find', 'Replace', 'SelectAll', 'Scayt', '-',
+							'Maximize', 'About']]" />
+						</h:panelGroup>
+
+						<p:separator styleClass="thinSeparator" />
+
+						<h:panelGroup layout="block" styleClass="textToCenter">
+							<p:commandButton value="#{blog.post}"
+								actionListener="#{blogView.postNewComment}"
+								icon="fa fa-file-text" update="@form" />
+						</h:panelGroup>
+
+						<p:separator />
+
+						<p:panelGrid
+							styleClass="commentPanel #{meta.principalInAdminRole? 'hasLeftIcon' : ''}">
+							<h:panelGroup layout="block" styleClass="textToLeft blueHint">
+								<h:outputText value="#{blog.noComments}"
+									rendered="#{empty blogView.comments}" />
+								<h:outputFormat value="#{blog.commentsList}"
+									rendered="#{not empty blogView.comments}">
+									<f:param value="#{blogView.comments.size()}" />
+								</h:outputFormat>
+							</h:panelGroup>
+							<ui:repeat var="comment" value="#{blogView.comments}">
+								<p:row>
+									<p:column styleClass="relative">
+										<p:commandButton update="@form" icon="fa fa-trash"
+											styleClass="small wideIcon toLeft toMiddle"
+											actionListener="#{blogView.removeComment(comment.commentID)}"
+											rendered="#{meta.principalInAdminRole}" />
+										<h:outputText value="#{comment.date}" />
+										<br />
+										<h:outputText value="#{general.by}" />
+										<h:outputText
+											styleClass="fa #{empty comment.user? 'fa-user-secret' : 'admin'.equals(comment.user.role)? 'fa-male' : 'fa-user'} inlined" />
+										<h:outputText
+											value="#{empty comment.user? general.anonymous : comment.user.username}" />
+									</p:column>
+									<p:column>
+										<iframe src="#{meta.getCommentURI(comment.commentID)}"
+											class="output post slowTransition" />
+									</p:column>
+								</p:row>
+							</ui:repeat>
+						</p:panelGrid>
+					</h:panelGroup>
+				</f:facet>
+			</p:panel>
+			
+			<p:panel styleClass="center vcenter styled" header="#{blog.notFound}"
+				rendered="#{empty blogView.blog}">
+				<h:outputText value="#{general.noData}" />
+			</p:panel>
+			
+			<p:separator />
+
+			<h:outputScript>iFrameResize({log: true}, '.post')</h:outputScript>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:param name="title" value="#{blog.newPost}" />
+
+		<ui:define name="metadata">
+			<f:metadata>
+				<f:viewParam name="draft" value="#{newPostView.draftID}" />
+			</f:metadata>
+		</ui:define>
+
+		<h:form id="postForm" styleClass="styledForm">
+			<p:panel id="newPostPanel" header="#{blog.newPost}"
+				styleClass="styled">
+				<p:focus context="newPostPanel" />
+
+				<h:outputScript library="js" name="clipboard.min.js" />
+				<h:outputScript>
+					var clipboard = new Clipboard('.copyButton');
+					
+					clipboard.on('success', function(e) {
+					    console.log(e);
+					});
+					
+					clipboard.on('error', function(e) {
+					    console.log(e);
+					});
+				</h:outputScript>
+
+				<p:toolbar id="toolbar" styleClass="bigIcons">
+					<f:facet name="left">
+						<p:commandButton value="#{blog.post}" action="#{newPostView.post}"
+							icon="fa fa-file-text" update="@form" />
+						<p:commandButton value="#{general.save}"
+							action="#{newPostView.saveDraft}" icon="fa fa-save"
+							process="@form" update="@form" />
+						<p:commandButton icon="fa fa-trash" value="#{general.remove}"
+							actionListener="#{newPostView.delete}" update="@form"
+							disabled="#{empty newPostView.draftID}" />
+						<p:button value="#{general.open}" outcome="blog"
+							icon="fa fa-file-text" disabled="#{empty newPostView.draftID}">
+							<f:param name="blog" value="#{newPostView.draftID}" />
+						</p:button>
+
+					</f:facet>
+				</p:toolbar>
+
+				<p:panelGrid columns="1" layout="grid">
+					<p:separator />
+
+					<p:messages id="titleMsgs" for="title" showIcon="false"
+						closable="true">
+						<p:effect event="load" type="bounce" />
+					</p:messages>
+
+					<p:outputLabel id="titleLabel" for="title" value="#{general.title}"
+						styleClass="bold" />
+
+					<h:panelGroup styleClass="inputWrapper" layout="block">
+						<h:outputText styleClass="ui-icon fa fa-edit" />
+						<p:inputText widgetVar="titlewv" id="title"
+							value="#{newPostView.title}">
+							<p:ajax event="change" update="titleLabel title titleMsgs" />
+						</p:inputText>
+					</h:panelGroup>
+
+					<p:separator />
+
+					<p:outputLabel id="thumbnailLabel" for="thumbnail"
+						value="#{blog.thumbnail}" styleClass="bold" />
+
+					<p:messages id="thumbnailMsgs" for="thumbnail" showIcon="false"
+						closable="true">
+						<p:effect event="load" type="bounce" />
+					</p:messages>
+
+					<h:panelGroup id="thumbnailPreview" layout="block"
+						styleClass="centered">
+
+						<h:panelGroup layout="block" styleClass="thumbnailPlaceholder">
+							<h:outputText value="#{blog.noThumbnailUploaded}"
+								styleClass="smallHint"
+								rendered="#{empty newPostView.thumbnail.fileID}" />
+						</h:panelGroup>
+
+						<h:panelGroup rendered="#{not empty newPostView.thumbnail}">
+							<h:panelGroup layout="block" styleClass="thumbnail">
+								<p:graphicImage
+									value="#{meta.getFileURI(newPostView.thumbnail.fileID)}"
+									width="50%" height="auto" />
+							</h:panelGroup>
+
+							<h:panelGroup layout="block" styleClass="property">
+								<h:outputText value="#{general.fileName}: "
+									styleClass="propertyName" />
+								<h:outputText value="#{newPostView.thumbnail.name}" />
+								<h:outputText
+									value=" (#{newPostView.formatSize(newPostView.thumbnail.size)})" />
+							</h:panelGroup>
+
+							<h:panelGroup layout="block" styleClass="property">
+								<h:outputText value="#{general.url}: " styleClass="propertyName" />
+								<h:outputLink
+									value="#{meta.getFileURI(newPostView.thumbnail.fileID)}"
+									styleClass="url">#{meta.getFileURI(newPostView.thumbnail.fileID)}</h:outputLink>
+								<p:commandButton type="button"
+									styleClass="inlined small copyButton wideIcon"
+									icon="fa fa-clipboard" title="#{general.copyURL}">
+									<f:passThroughAttribute name="data-clipboard-text"
+										value="#{meta.getFileURI(newPostView.thumbnail.fileID)}" />
+								</p:commandButton>
+
+								<p:commandButton icon="fa fa-download"
+									styleClass="small wideIcon" ajax="false"
+									title="#{general.download}">
+									<p:fileDownload
+										value="#{meta.asStreamedContent(newPostView.thumbnail)}" />
+								</p:commandButton>
+
+								<p:commandButton icon="fa fa-trash" styleClass="small wideIcon"
+									actionListener="#{newPostView.removeThumbnail()}"
+									title="#{general.removeFile}" process="@this"
+									update="thumbnailPreview" />
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+
+					<p:fileUpload id="thumbnail" auto="true" required="true"
+						fileUploadListener="#{newPostView.handleThumbnailUpload}"
+						sequential="true" label="#{general.choose}"
+						uploadLabel="#{general.upload}" cancelLabel="#{general.cancel}"
+						sizeLimit="#{1024 * 1024 * 20}"
+						invalidSizeMessage="#{blog.fileTooBig}" multiple="false"
+						process="@form"
+						update="@this thumbnailPreview thumbnailMsgs toolbar" />
+
+					<p:messages id="introMsgs" for="intro" showIcon="false"
+						closable="true">
+						<p:effect event="load" type="bounce" />
+					</p:messages>
+
+					<p:outputLabel for="intro" value="#{blog.introduction}"
+						styleClass="bold" />
+
+					<p:outputPanel styleClass="cervexLoading editor" deferred="false">
+						<pe:ckEditor id="intro" value="#{newPostView.intro}" width="auto"
+							skin="office2013" language="#{localeManager.language}">
+							<p:ajax process="@form" event="save" update="@this toolbar"
+								listener="#{newPostView.saveIntro}" />
+						</pe:ckEditor>
+					</p:outputPanel>
+
+					<p:separator />
+
+					<p:messages id="mainMsgs" for="main" showIcon="false"
+						closable="true">
+						<p:effect event="load" type="bounce" />
+					</p:messages>
+
+					<p:outputLabel for="main" value="#{blog.mainArticle}"
+						styleClass="bold" />
+
+					<p:outputPanel styleClass="cervexLoading editor" deferred="false">
+						<pe:ckEditor id="main" value="#{newPostView.content}" width="auto"
+							skin="office2013" language="#{localeManager.language}">
+							<p:ajax process="@form" event="save" update="@this toolbar"
+								listener="#{newPostView.saveMain}" />
+						</pe:ckEditor>
+					</p:outputPanel>
+
+					<p:separator />
+
+					<p:outputLabel value="#{general.attachedFiles}" styleClass="bold" />
+
+					<p:messages id="uploadMsgs" for="fileUpload" showIcon="false"
+						closable="true">
+						<p:effect event="load" type="bounce" />
+					</p:messages>
+
+					<p:dataTable id="attachedFiles" styleClass="centered" var="file"
+						value="#{newPostView.files}"
+						emptyMessage="#{general.noUploadedFiles}">
+
+						<p:column headerText="#{general.fileName}">
+							<h:outputText value="#{file.name}" />
+						</p:column>
+
+						<p:column headerText="#{general.url}">
+							<h:outputLink value="#{meta.getFileURI(file.fileID)}"
+								styleClass="url">#{meta.getFileURI(file.fileID)}</h:outputLink>
+							<p:commandButton type="button"
+								styleClass="inlined small copyButton wideIcon"
+								icon="fa fa-clipboard" title="#{general.copyURL}">
+								<f:passThroughAttribute name="data-clipboard-text"
+									value="#{meta.getFileURI(file.fileID)}" />
+							</p:commandButton>
+						</p:column>
+
+						<p:column headerText="#{general.size}" width="90">
+							<h:outputText value="#{newPostView.formatSize(file.size)}" />
+						</p:column>
+
+						<p:column headerText="#{general.actions}" width="60">
+							<p:commandButton icon="fa fa-download"
+								styleClass="small wideIcon" ajax="false"
+								title="#{general.download}">
+								<p:fileDownload value="#{meta.asStreamedContent(file)}" />
+							</p:commandButton>
+
+							<p:commandButton icon="fa fa-trash" styleClass="small wideIcon"
+								actionListener="#{newPostView.removeFile(file.fileID)}"
+								title="#{general.removeFile}" process="@this"
+								update="attachedFiles" />
+						</p:column>
+
+					</p:dataTable>
+
+					<p:fileUpload id="fileUpload" auto="true"
+						fileUploadListener="#{newPostView.handleFileUpload}"
+						sequential="true" label="#{general.choose}"
+						uploadLabel="#{general.upload}" cancelLabel="#{general.cancel}"
+						sizeLimit="#{1024 * 1024 * 20}"
+						invalidSizeMessage="#{blog.fileTooBig}" multiple="true"
+						process="@form" update="@this attachedFiles uploadMsgs toolbar" />
+
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

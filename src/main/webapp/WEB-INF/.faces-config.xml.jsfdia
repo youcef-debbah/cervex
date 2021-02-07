@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#user#profile.xhtml"
+  PATH="/user/profile.xhtml" SHAPE="304,1201,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#erp.xhtml" PATH="/erp.xhtml"
+  SHAPE="304,1537,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#newUser.xhtml" PATH="/newUser.xhtml"
+  SHAPE="304,641,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#aboutUs.xhtml" PATH="/aboutUs.xhtml"
+  SHAPE="304,1425,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#training.xhtml" PATH="/training.xhtml"
+  SHAPE="304,1761,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#user#applyForArticle.xhtml"
+  PATH="/user/applyForArticle.xhtml" SHAPE="304,1313,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#applications.xhtml"
+  PATH="/applications.xhtml" SHAPE="304,1649,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#error#forbidden.xhtml"
+  PATH="/error/forbidden.xhtml" SHAPE="304,529,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#secured#sendMessage.xhtml"
+  PATH="/secured/sendMessage.xhtml" SHAPE="304,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#secured#inbox.xhtml"
+  PATH="/secured/inbox.xhtml" SHAPE="304,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#accounts.xhtml"
+  PATH="/admin/accounts.xhtml" SHAPE="304,673,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#addArticle.xhtml"
+  PATH="/admin/addArticle.xhtml" SHAPE="304,561,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#login.xhtml" PATH="/login.xhtml"
+  SHAPE="304,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#articles.xhtml"
+  PATH="/admin/articles.xhtml" SHAPE="304,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#applies.xhtml"
+  PATH="/admin/applies.xhtml" SHAPE="304,625,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#updateArticle.xhtml"
+  PATH="/admin/updateArticle.xhtml" SHAPE="304,625,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#user#business.xhtml"
+  PATH="/user/business.xhtml" SHAPE="304,625,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,1137,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="homePage::#home.xhtml" NAME="output"
+    PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="homePage" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="login::#login.xhtml" NAME="output1"
+    PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="login" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="newUser::#newUser.xhtml" NAME="output2"
+    PATH="/newUser.xhtml" TARGET="rules:#newUser.xhtml" TITLE="newUser" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="forbidden::#error#forbidden.xhtml"
+    NAME="output3" PATH="/error/forbidden.xhtml"
+    TARGET="rules:#error#forbidden.xhtml" TITLE="forbidden" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="adminHome::#admin#statistics.xhtml"
+    NAME="output4" PATH="/admin/statistics.xhtml"
+    TARGET="rules:#admin#statistics.xhtml" TITLE="adminHome" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="newPost::#admin#newPost.xhtml"
+    NAME="output5" PATH="/admin/newPost.xhtml"
+    TARGET="rules:#admin#newPost.xhtml" TITLE="newPost" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="statistics::#admin#statistics.xhtml"
+    NAME="output6" PATH="/admin/statistics.xhtml"
+    TARGET="rules:#admin#statistics.xhtml" TITLE="statistics" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="addArticle::#admin#addArticle.xhtml"
+    NAME="output7" PATH="/admin/addArticle.xhtml"
+    TARGET="rules:#admin#addArticle.xhtml" TITLE="addArticle" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="updateArticle::#admin#updateArticle.xhtml"
+    NAME="output8" PATH="/admin/updateArticle.xhtml"
+    TARGET="rules:#admin#updateArticle.xhtml" TITLE="updateArticle" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="applies::#admin#applies.xhtml"
+    NAME="output9" PATH="/admin/applies.xhtml"
+    TARGET="rules:#admin#applies.xhtml" TITLE="applies" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="articles::#admin#articles.xhtml"
+    NAME="output10" PATH="/admin/articles.xhtml"
+    TARGET="rules:#admin#articles.xhtml" TITLE="articles" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="accounts::#admin#accounts.xhtml"
+    NAME="output11" PATH="/admin/accounts.xhtml"
+    TARGET="rules:#admin#accounts.xhtml" TITLE="accounts" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="deleteAccountDialog::#admin#deleteUserDialog.xhtml"
+    NAME="output12" PATH="/admin/deleteUserDialog.xhtml"
+    TARGET="rules:#admin#deleteUserDialog.xhtml"
+    TITLE="deleteAccountDialog" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="deleteAccountDataDialog::#admin#deleteUserDataDialog.xhtml"
+    NAME="output13" PATH="/admin/deleteUserDataDialog.xhtml"
+    TARGET="rules:#admin#deleteUserDataDialog.xhtml"
+    TITLE="deleteAccountDataDialog" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="deleteDemandDialog::#admin#deleteDemandDialog.xhtml"
+    NAME="output14" PATH="/admin/deleteDemandDialog.xhtml"
+    TARGET="rules:#admin#deleteDemandDialog.xhtml"
+    TITLE="deleteDemandDialog" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="userHome::#home.xhtml" NAME="output15"
+    PATH="/home.xhtml" TARGET="rules:#home.xhtml" TITLE="userHome" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="userProfile::#user#profile.xhtml"
+    NAME="output16" PATH="/user/profile.xhtml"
+    TARGET="rules:#user#profile.xhtml" TITLE="userProfile" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="business::#user#business.xhtml"
+    NAME="output17" PATH="/user/business.xhtml"
+    TARGET="rules:#user#business.xhtml" TITLE="business" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="applyForArticle::#user#applyForArticle.xhtml" NAME="output18"
+    PATH="/user/applyForArticle.xhtml"
+    TARGET="rules:#user#applyForArticle.xhtml" TITLE="applyForArticle" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="aboutUs::#aboutUs.xhtml" NAME="output19"
+    PATH="/aboutUs.xhtml" TARGET="rules:#aboutUs.xhtml" TITLE="aboutUs" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="erp::#erp.xhtml" NAME="output20"
+    PATH="/erp.xhtml" TARGET="rules:#erp.xhtml" TITLE="erp" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="applications::#applications.xhtml"
+    NAME="output21" PATH="/applications.xhtml"
+    TARGET="rules:#applications.xhtml" TITLE="applications" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="training::#training.xhtml" NAME="output22"
+    PATH="/training.xhtml" TARGET="rules:#training.xhtml"
+    TITLE="training" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="inbox::#secured#inbox.xhtml" NAME="output23"
+    PATH="/secured/inbox.xhtml" TARGET="rules:#secured#inbox.xhtml"
+    TITLE="inbox" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="sendMessage::#secured#sendMessage.xhtml"
+    NAME="output24" PATH="/secured/sendMessage.xhtml"
+    TARGET="rules:#secured#sendMessage.xhtml" TITLE="sendMessage" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="newComments::#admin#newComments.xhtml"
+    NAME="output25" PATH="/admin/newComments.xhtml"
+    TARGET="rules:#admin#newComments.xhtml" TITLE="newComments" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="posts::#posts.xhtml" NAME="output26"
+    PATH="/posts.xhtml" TARGET="rules:#posts.xhtml" TITLE="posts" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#admin#statistics.xhtml"
+  PATH="/admin/statistics.xhtml" SHAPE="304,1041,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#deleteUserDialog.xhtml"
+  PATH="/admin/deleteUserDialog.xhtml" SHAPE="304,929,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#deleteUserDataDialog.xhtml"
+  PATH="/admin/deleteUserDataDialog.xhtml" SHAPE="304,817,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#newPost.xhtml"
+  PATH="/admin/newPost.xhtml" SHAPE="304,2465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#blog.xhtml" PATH="/blog.xhtml"
+  SHAPE="304,2465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#newComments.xhtml"
+  PATH="/admin/newComments.xhtml" SHAPE="304,2561,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#posts.xhtml" PATH="/posts.xhtml"
+  SHAPE="304,2593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#home.xhtml" PATH="/home.xhtml"
+  SHAPE="304,2657,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#deleteDemandDialog.xhtml"
+  PATH="/admin/deleteDemandDialog.xhtml" SHAPE="304,2657,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

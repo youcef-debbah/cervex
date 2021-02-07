@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee         http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+	<navigation-rule>
+		<description>General navigation rules</description>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>homePage</from-outcome>
+			<to-view-id>/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>newUser</from-outcome>
+			<to-view-id>/newUser.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>forbidden</from-outcome>
+			<to-view-id>/error/forbidden.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>adminHome</from-outcome>
+			<to-view-id>/admin/statistics.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>newPost</from-outcome>
+			<to-view-id>/admin/newPost.xhtml</to-view-id>
+			<redirect>
+				<view-param>
+					<name>draft</name>
+					<value />
+				</view-param>
+			</redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>statistics</from-outcome>
+			<to-view-id>/admin/statistics.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>addArticle</from-outcome>
+			<to-view-id>/admin/addArticle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>updateArticle</from-outcome>
+			<to-view-id>/admin/updateArticle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>applies</from-outcome>
+			<to-view-id>/admin/applies.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>articles</from-outcome>
+			<to-view-id>/admin/articles.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>accounts</from-outcome>
+			<to-view-id>/admin/accounts.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>deleteAccountDialog</from-outcome>
+			<to-view-id>/admin/deleteUserDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>deleteAccountDataDialog</from-outcome>
+			<to-view-id>/admin/deleteUserDataDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>deleteDemandDialog</from-outcome>
+			<to-view-id>/admin/deleteDemandDialog.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>userHome</from-outcome>
+			<to-view-id>/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>blog</from-outcome>
+			<to-view-id>/blog.xhtml</to-view-id>
+			<redirect>
+				<view-param>
+					<name>blog</name>
+					<value>#{newPostView.postedBlog}</value>
+				</view-param>
+			</redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>userProfile</from-outcome>
+			<to-view-id>/user/profile.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>business</from-outcome>
+			<to-view-id>/user/business.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>applyForArticle</from-outcome>
+			<to-view-id>/user/applyForArticle.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>aboutUs</from-outcome>
+			<to-view-id>/aboutUs.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>erp</from-outcome>
+			<to-view-id>/erp.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>applications</from-outcome>
+			<to-view-id>/applications.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>training</from-outcome>
+			<to-view-id>/training.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>inbox</from-outcome>
+			<to-view-id>/secured/inbox.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sendMessage</from-outcome>
+			<to-view-id>/secured/sendMessage.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>newComments</from-outcome>
+			<to-view-id>/admin/newComments.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>posts</from-outcome>
+			<to-view-id>/posts.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<application>
+		<action-listener>org.primefaces.application.DialogActionListener</action-listener>
+		<navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
+		<view-handler>org.primefaces.application.DialogViewHandler</view-handler>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>fr</supported-locale>
+		</locale-config>
+		<resource-bundle>
+			<base-name>general</base-name>
+			<var>general</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>home</base-name>
+			<var>home</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>erp</base-name>
+			<var>erp</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>applications</base-name>
+			<var>applications</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>training</base-name>
+			<var>training</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>login</base-name>
+			<var>login</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>aboutUs</base-name>
+			<var>aboutUs</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>userMsg</base-name>
+			<var>userMsg</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>adminMsg</base-name>
+			<var>adminMsg</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>article</base-name>
+			<var>article</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>messaging</base-name>
+			<var>messaging</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>blog</base-name>
+			<var>blog</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>images</base-name>
+			<var>images</var>
+		</resource-bundle>
+		<message-bundle>ValidationMessages</message-bundle>
+		<el-resolver>org.primefaces.application.exceptionhandler.PrimeExceptionHandlerELResolver</el-resolver>
+	</application>
+	<factory>
+		<exception-handler-factory>com.rhcloud.cervex_jsoftware95.control.ViewExpiredExceptionHandlerFactory</exception-handler-factory>
+	</factory>
+	<lifecycle>
+		<phase-listener>com.rhcloud.cervex_jsoftware95.control.LoginForwardListener</phase-listener>
+	</lifecycle>
+</faces-config>

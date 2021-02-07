@@ -1,0 +1,79 @@
+@CHARSET "UTF-8";
+
+.banner {
+	padding: 12em 0 10em 0;
+	background-size: cover;
+	background-position: top;
+	background-repeat: no-repeat;
+	text-align: center;
+	background-color: #057cad;
+}
+
+#mainGalleriaPanel {
+	position: relative;
+}
+
+.ui-outputpanel-loading {
+	position: absolute;
+	margin: auto;
+	top: calc(50% - 16px);
+	left: calc(50% - 16px);
+}
+
+#erpBanner {
+	background-image: url("#{resource['images:erp.jpg']}");
+}
+
+#applicationBanner {
+	background-image: url("#{resource['images:application.jpg']}");
+}
+
+#trainingBanner {
+	background-image: url("#{resource['images:training.jpg']}");
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 52px;
+    font-weight: normal;
+    line-height: 71px;
+    margin: 0px;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0,62,122,.5);
+    text-transform: none;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+	margin-top: 0px;
+	font-size: 200%;
+	text-align: center;
+	font-size: 200%;
+	line-height: 100%;
+}
+
+.easySteps {
+	color: #ffffff;
+	background: #0080c0;
+	border-radius: 0em 3em 0em 3em;
+	padding-top: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-bottom: 0em;
+	border-radius: 0em 3em 0em 3em;
+}
+
+.easySteps h3 {
+	text-align: center;
+	font-size: 150%;
+	margin: 0px;
+}
+
+p {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.additionalInfo {
+	font-weight: bold;
+}
