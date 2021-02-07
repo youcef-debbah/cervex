@@ -1,0 +1,15 @@
+#!/bin/bash
+# Builds the application artifacts from a source and places
+# them in the appropriate directories inside the image.
+
+echo "running pre build hook..."
+# hook script
+echo "<!-- pre build s2i -->" >> /wildfly/standalone/configuration/standalone.xml
+token1='<security-domain name="cervex" cache-type="default"><authentication><login-module code="com.rhcloud.cervex_jsoftware95.security.DatabaseLoginModule" flag="required"><module-option name="dsJndiName" value="java:jboss\/datasources\/MySQLDS"\/><module-option name="rolesQuery" value="SELECT role,'
+token2='FROM user WHERE username=?"\/><module-option name="principalsQuery" value="SELECT password from user WHERE username=?"\/><module-option name="principalClass" value="com.rhcloud.cervex_jsoftware95.security.StandardPrincipal"\/><\/login-module><\/authentication><authorization><policy-module code="Delegating" flag="required"\/><\/authorization><\/security-domain>'
+sed -i "/<security-domains>/a $token1 'Roles' $token2" /wildfly/standalone/configuration/standalone.xml
+cat /wildfly/standalone/configuration/standalone.xml
+echo "...hook done"
+
+# Execute the default S2I script
+exec /usr/libexec/s2i/assemble

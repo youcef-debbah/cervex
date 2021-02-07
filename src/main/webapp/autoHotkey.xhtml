@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://jsoftware95.rhcloud.com/ui">
+
+<h:head>
+	<title>AutoHotkey</title>
+	<h:outputStylesheet library="css" name="erp.css" />
+</h:head>
+
+<h:body>
+	<div class="reveal">
+		<div class="slides erpSlids">
+				<section>
+				<h1>AutoHotkey</h1>
+			</section>
+			<section>
+				<p>What is AutoHotkey?</p>
+			</section>
+			<section>
+				<p>autoHotkey can be used:</p>
+				<ul>
+					<li class="fragment fade-up">as a multi-purpose scripting
+						language</li>
+					<li class="fragment fade-up">to define HotKeys</li>
+					<li class="fragment fade-up">to define HotStrings</li>
+				</ul>
+			</section>
+			<section>
+				<p>How does an AHK script look like?</p>
+				<h:graphicImage library="extra" name="ahkExample.png"
+					styleClass="fragment fade-up" />
+			</section>
+			<section>
+				<p>what do we mean by Hotkeys and Hotstrings?</p>
+			</section>
+			<section>
+				<p>How to define a HotKey?</p>
+				<h:graphicImage styleClass="fragment fade-up" library="extra" name="hotkeySyntax.png" />
+			</section>
+			<section>
+				<table>
+					<thead>
+						<tr>
+							<th>Symbol</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>#</td>
+							<td>Win (Windows logo key)</td>
+						</tr>
+						<tr>
+							<td>!</td>
+							<td>Alt</td>
+						</tr>
+						<tr>
+							<td>^</td>
+							<td>Control</td>
+						</tr>
+						<tr>
+							<td>+</td>
+							<td>Shift</td>
+						</tr>
+						<tr>
+							<td>&amp;</td>
+							<td>combine two keys or mouse buttons</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+			<section>
+			<p>Example:</p>
+			<h:graphicImage library="extra" name="hotkeyExample.png" />
+			</section>
+			<section>
+				<p>How to define a HotString?</p>
+				<h:graphicImage styleClass="fragment fade-up" library="extra" name="hotstringSyntax.png" />
+			</section>
+			<section>
+				<p>Ending Characters:</p>
+				<p>- ( ) [ ] { } : ; ' " / \ , . ? ! \n \t</p>
+			</section>
+			<section>
+				<p>Example:</p>
+				<h:graphicImage library="extra" name="hotstringExample.png" />
+			</section>
+			<section>
+				<h2>thank you!</h2>
+			</section>
+		</div>
+	</div>
+	<j:reveal theme="sky" transition="convex"
+		parallaxBackgroundHorizontal="50"
+		parallaxBackgroundImage="#{resource['images:erp.jpg']}" />
+</h:body>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="cervex">
+
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <jta-data-source>java:jboss/datasources/MySQLDS</jta-data-source>
+
+        <class>com.rhcloud.cervex_jsoftware95.entities.Article</class>
+        <class>com.rhcloud.cervex_jsoftware95.entities.User</class>
+        <class>com.rhcloud.cervex_jsoftware95.entities.Blog</class>
+        <class>com.rhcloud.cervex_jsoftware95.entities.Comment</class>
+        <class>com.rhcloud.cervex_jsoftware95.entities.Demand</class>
+        <class>com.rhcloud.cervex_jsoftware95.entities.File</class>
+        <class>com.rhcloud.cervex_jsoftware95.entities.Message</class>
+        <class>com.rhcloud.cervex_jsoftware95.entities.Statistic</class>
+
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+
+            <property name="hibernate.globally_quoted_identifiers" value="true"/>
+            <property name="hibernate.globally_quoted_identifiers_skip_column_definitions" value="true"/>
+
+            <property name="hibernate.jdbc.batch_size" value="30"/>
+
+            <property name="c3p0.min_size" value="1"/>
+            <property name="c3p0.max_size" value="8"/>
+            <property name="c3p0.timeout" value="300"/>
+            <property name="c3p0.max_statements" value="50"/>
+            <property name="c3p0.idle_test_period" value="1200"/>
+
+            <!-- Show and print nice SQL on stdout -->
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="false"/>
+            <property name="hibernate.use_sql_comments" value="true"/>
+
+            <!-- statistics -->
+            <property name="hibernate.generate_statistics" value="false"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>

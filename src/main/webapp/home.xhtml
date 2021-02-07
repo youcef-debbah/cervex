@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--suppress RequiredAttributes -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<h:outputStylesheet library="css" name="home.css" />
+		<ui:param name="wrapperClass" value="homePage" />
+
+		<div class="title">
+			<h1>#{general.softwareDevelopment}</h1>
+		</div>
+
+		<p:outputPanel id="homePageGalleriaWrapper" layout="block"
+			styleClass="cervexLoading mainPage" delay="300"
+			deferred="#{request.getParameter('lazy') == 'off'? false : true}">
+
+			<p:galleria showCaption="true" transitionInterval="10000"
+				widgetVar="slideshow" effectSpeed="300" panelHeight="470"
+				effect="drop" showFilmstrip="false">
+
+				<p:commandLink outcome="erp" onclick="jsoftware95.preAction()">
+					<p:graphicImage name="erp.jpg" library="images"
+						title="#{erp.title}" alt="#{erp.preview1} #{erp.preview2}" />
+				</p:commandLink>
+				<p:commandLink outcome="applications"
+					onclick="jsoftware95.preAction()">
+					<p:graphicImage name="application.jpg" library="images"
+						title="#{applications.title}" alt="#{applications.preview}" />
+				</p:commandLink>
+				<p:commandLink outcome="training" onclick="jsoftware95.preAction()">
+					<p:graphicImage name="training.jpg" library="images"
+						title="#{training.title}"
+						alt="#{training.preview} 1-#{training.firstType} 2-#{training.secondType}" />
+				</p:commandLink>
+			</p:galleria>
+			<h:outputScript>$(window).trigger('load');</h:outputScript>
+		</p:outputPanel>
+
+		<p:panel header="#{aboutUs.whoAreWe}" styleClass="mainPage styled">
+			<p>#{aboutUs.ourEnterprise}</p>
+			<f:facet name="footer">
+				<p:button value="#{aboutUs.moreAboutUs}" outcome="aboutUs"
+					icon="fa fa-info-circle" />
+			</f:facet>
+		</p:panel>
+
+
+		<p:panel layout="block" header="#{home.areYouLookingForUs}"
+			styleClass="mainPage styled">
+			<p>#{home.youAreInTheRightPlace} #{home.youAre3StepsAway}</p>
+			<h:panelGroup layout="block" styleClass="center">
+				<h:form>
+					<p:steps activeIndex="4" readonly="false">
+						<p:menuitem value="#{home.singUpToOurService}" outcome="newUser" />
+						<p:menuitem value="#{home.applyForSoftware}"
+							outcome="applyForArticle" />
+						<p:menuitem value="#{home.getYourSoftware}" outcome="business" />
+					</p:steps>
+				</h:form>
+			</h:panelGroup>
+		</p:panel>
+
+		<h:panelGroup styleClass="element largPadding" layout="block">
+			<section>
+				<h2>#{erp.title}</h2>
+				<h:outputText value="#{erp.preview1}" />
+				<h:outputText value="#{erp.preview2}" />
+			</section>
+			<p:button value="#{general.learnMore}" outcome="erp"
+				icon="fa fa-info-circle" />
+		</h:panelGroup>
+
+		<h:panelGroup id="erpBanner" layout="block" styleClass="banner" />
+
+		<h:panelGroup layout="block" styleClass="element largPadding">
+			<section>
+				<h2>#{applications.title}</h2>
+				<h:outputText value="#{applications.preview}" />
+			</section>
+			<p:button value="#{general.learnMore}" outcome="applications"
+				icon="fa fa-info-circle" />
+		</h:panelGroup>
+
+		<h:panelGroup id="applicationBanner" styleClass="banner"
+			layout="block" />
+
+		<h:panelGroup styleClass="element largPadding" layout="block">
+			<section>
+				<h2>#{training.title}</h2>
+				<h:panelGroup styleClass="center styledList" layout="block">
+					<h:outputText value="#{training.preview}" />
+					<ul>
+						<li><h:outputText value="#{training.firstType}" /></li>
+						<li><h:outputText value="#{training.secondType}" /></li>
+					</ul>
+				</h:panelGroup>
+			</section>
+			<p:button value="#{general.learnMore}" outcome="training"
+				icon="fa fa-info-circle" />
+		</h:panelGroup>
+
+		<h:panelGroup id="trainingBanner" styleClass="banner" layout="block" />
+	</ui:composition>
+</h:body>
+</html>

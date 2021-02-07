@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:param name="title" value="#{userMsg.profile}" />
+		<ui:param name="wrapperClass" value="securityPage" />
+
+		<h:form styleClass="styledForm">
+			<p:panel>
+				<f:facet name="header">
+					<h:outputFormat value="#{userMsg.profileOf}">
+						<f:param value="#{request.userPrincipal.name}" />
+					</h:outputFormat>
+				</f:facet>
+
+				<p:separator styleClass="headerSeparator" />
+
+				<p:panelGrid columns="2" layout="grid">
+					<p:panelGrid columns="1" layout="grid">
+						<!-- Phone number -->
+						<p:outputLabel id="phoneNumberLabel" for="phoneNumber"
+							value="#{userMsg.phoneNumber}" title="#{userMsg.phoneNumberHelp}"
+							indicateRequired="false" />
+
+						<p:messages id="phoneNumberMsgs" for="phoneNumber"
+							showIcon="false" closable="true">
+							<p:effect event="load" type="bounce" />
+						</p:messages>
+
+						<p:inplace editor="true" emptyLabel="#{general.noValue}"
+							saveLabel="#{general.save}" cancelLabel="#{general.cancel}"
+							styleClass="#{(empty profileManager.enterpriseAddress)? 'noHighLight' : ''}">
+							<p:ajax event="save"
+								listener="#{profileManager.updatePhoneNumber()}"
+								update="phoneNumberMsgs" />
+							<f:facet name="output">
+								<h:outputText value="#{profileManager.phoneNumber}"
+									styleClass="clickable"
+									rendered="#{not empty profileManager.phoneNumber}" />
+								<p:commandButton icon="fa fa-plus" styleClass="small"
+									rendered="#{empty profileManager.phoneNumber}" />
+							</f:facet>
+							<f:facet name="input">
+								<h:panelGroup styleClass="inputWrapper ui-fluid" layout="block">
+									<span class="ui-icon fa fa-phone" />
+									<p:inputMask id="phoneNumber"
+										value="#{profileManager.phoneNumber}" mask="09 99 99 99 99"
+										placeholder="__ __ __ __ __"
+										title="#{userMsg.phoneNumberHelp}">
+										<p:ajax event="blur"
+											update="phoneNumberLabel phoneNumber phoneNumberMsgs" />
+									</p:inputMask>
+								</h:panelGroup>
+							</f:facet>
+						</p:inplace>
+						<p:separator />
+						<!-- E-mail -->
+						<p:outputLabel id="emailLabel" for="email"
+							value="#{userMsg.email}" title="#{userMsg.emailHelp}"
+							indicateRequired="false" />
+
+						<p:messages id="emailMsgs" for="email" showIcon="false"
+							closable="true">
+							<p:effect event="load" type="bounce" />
+						</p:messages>
+
+						<p:inplace editor="true" emptyLabel="#{general.noValue}"
+							saveLabel="#{general.save}" cancelLabel="#{general.cancel}"
+							styleClass="#{(empty profileManager.enterpriseAddress)? 'noHighLight' : ''}">
+							<p:ajax event="save" listener="#{profileManager.updateEmail()}"
+								update="emailMsgs" />
+							<f:facet name="output">
+								<h:outputText value="#{profileManager.email}"
+									styleClass="clickable"
+									rendered="#{not empty profileManager.email}" />
+								<p:commandButton icon="fa fa-plus" styleClass="small"
+									rendered="#{empty profileManager.email}" />
+							</f:facet>
+							<f:facet name="input">
+								<h:panelGroup styleClass="inputWrapper ui-fluid" layout="block">
+									<span class="ui-icon fa fa-envelope" />
+									<p:inputText id="email" value="#{profileManager.email}"
+										placeholder="#{userMsg.emailSyntax}"
+										title="#{userMsg.emailHelp}">
+										<p:ajax event="blur" update="emailLabel email emailMsgs" />
+									</p:inputText>
+								</h:panelGroup>
+							</f:facet>
+						</p:inplace>
+						<p:separator />
+						<!-- website -->
+						<p:outputLabel id="websiteLabel" for="website"
+							value="#{userMsg.website}" title="#{userMsg.websiteHelp}"
+							indicateRequired="false" />
+
+						<p:messages id="websiteMsgs" for="website" showIcon="false"
+							closable="true">
+							<p:effect event="load" type="bounce" />
+						</p:messages>
+
+						<p:inplace editor="true" emptyLabel="#{general.noValue}"
+							saveLabel="#{general.save}" cancelLabel="#{general.cancel}"
+							styleClass="#{(empty profileManager.enterpriseAddress)? 'noHighLight' : ''}">
+							<p:ajax event="save" listener="#{profileManager.updateWebsite()}"
+								update="websiteMsgs" />
+							<f:facet name="output">
+								<h:outputText value="#{profileManager.website}"
+									styleClass="clickable"
+									rendered="#{not empty profileManager.website}" />
+								<p:commandButton icon="fa fa-plus" styleClass="small"
+									rendered="#{empty profileManager.website}" />
+							</f:facet>
+							<f:facet name="input">
+								<h:panelGroup styleClass="inputWrapper ui-fluid" layout="block">
+									<span class="ui-icon fa fa-home" />
+									<p:inputText id="website" value="#{profileManager.website}"
+										title="#{userMsg.websiteHelp}">
+										<p:ajax event="blur" update="websiteLabel website websiteMsgs" />
+									</p:inputText>
+								</h:panelGroup>
+							</f:facet>
+						</p:inplace>
+					</p:panelGrid>
+					<p:panelGrid columns="1" layout="grid">
+						<!-- Enterprise name -->
+						<p:outputLabel id="enterpriseNameLabel" for="enterpriseName"
+							value="#{userMsg.enterpriseName}"
+							title="#{userMsg.enterpriseNameHelp}" indicateRequired="false" />
+
+						<p:messages id="enterpriseNameMsgs" for="enterpriseName"
+							showIcon="false" closable="true">
+							<p:effect event="load" type="bounce" />
+						</p:messages>
+
+						<p:inplace editor="true" emptyLabel="#{general.noValue}"
+							saveLabel="#{general.save}" cancelLabel="#{general.cancel}"
+							styleClass="#{(empty profileManager.enterpriseAddress)? 'noHighLight' : ''}">
+							<p:ajax event="save"
+								listener="#{profileManager.updateEnterpriseName()}"
+								update="enterpriseNameMsgs" />
+							<f:facet name="output">
+								<h:outputText value="#{profileManager.enterpriseName}"
+									styleClass="clickable"
+									rendered="#{not empty profileManager.enterpriseName}" />
+								<p:commandButton icon="fa fa-plus" styleClass="small"
+									rendered="#{empty profileManager.enterpriseName}" />
+							</f:facet>
+							<f:facet name="input">
+								<h:panelGroup styleClass="inputWrapper ui-fluid" layout="block">
+									<span class="ui-icon fa fa-home" />
+									<p:inputText id="enterpriseName"
+										value="#{profileManager.enterpriseName}"
+										title="#{userMsg.enterpriseNameHelp}">
+										<p:ajax event="blur"
+											update="enterpriseNameLabel enterpriseName enterpriseNameMsgs" />
+									</p:inputText>
+								</h:panelGroup>
+							</f:facet>
+						</p:inplace>
+						<p:separator />
+						<!-- Enterprise address -->
+						<p:outputLabel id="enterpriseAddressLabel" for="enterpriseAddress"
+							value="#{userMsg.enterpriseAddress}"
+							title="#{userMsg.enterpriseAddressHelp}" indicateRequired="false" />
+
+						<p:messages id="enterpriseAddressMsgs" for="enterpriseAddress"
+							showIcon="false" closable="true">
+							<p:effect event="load" type="bounce" />
+						</p:messages>
+
+						<p:inplace editor="true" emptyLabel="#{general.noValue}"
+							saveLabel="#{general.save}" cancelLabel="#{general.cancel}"
+							styleClass="#{(empty profileManager.enterpriseAddress)? 'noHighLight' : ''}">
+							<p:ajax event="save"
+								listener="#{profileManager.updateEnterpriseAddress()}"
+								update="enterpriseAddressMsgs" />
+							<f:facet name="output">
+								<h:outputText value="#{profileManager.enterpriseAddress}"
+									styleClass="clickable"
+									rendered="#{not empty profileManager.enterpriseAddress}" />
+								<p:commandButton icon="fa fa-plus" styleClass="small"
+									rendered="#{empty profileManager.enterpriseAddress}" />
+							</f:facet>
+							<f:facet name="input">
+								<h:panelGroup styleClass="inputWrapper ui-fluid" layout="block">
+									<span class="ui-icon fa fa-map-marker" />
+									<p:inputText id="enterpriseAddress"
+										value="#{profileManager.enterpriseAddress}"
+										placeholder="#{userMsg.enterpriseAddressSyntax}"
+										title="#{userMsg.enterpriseAddressHelp}">
+										<p:ajax event="blur"
+											update="enterpriseAddressLabel enterpriseAddress enterpriseAddressMsgs" />
+									</p:inputText>
+								</h:panelGroup>
+							</f:facet>
+						</p:inplace>
+					</p:panelGrid>
+				</p:panelGrid>
+
+			</p:panel>
+		</h:form>
+
+	</ui:composition>
+</h:body>
+</html>

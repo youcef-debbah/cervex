@@ -1,0 +1,156 @@
+@CHARSET "ISO-8859-1";
+
+.ui-spinner-input, .ui-inputfield[data-p-hl="inputnumber"] {
+	text-align: center;
+	font-family: Verdana, Arial, sans-serif !important;
+	font-size: 1em !important;
+}
+
+.textToEnd {
+	text-align: end;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default,
+	.ui-widget-header .ui-state-default {
+	border-color: #3887a7;
+}
+
+.inlined {
+	margin: 0.2em 0.5em;
+}
+
+.ui-widget-content {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+#status {
+	background: rgba(255, 255, 255, 0.5);
+	padding: 1em;
+	border-radius: 1em;
+	-webkit-box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+	-moz-box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+	box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5);
+	text-align: center;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+}
+
+.ui-widget-content {
+	background: none;
+	border: none;
+}
+
+.ui-orderlist .ui-widget-content {
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border: 1px solid #fff;
+}
+
+.ui-panel-titlebar-icon {
+	margin-top: 3px !important;
+}
+
+form {
+	padding: 1em !important;
+}
+
+.ui-orderlist-item {
+	border: 1px solid #a6c9e2;
+	background: #2191c0
+		url(/cervex/javax.faces.resource/images/ui-bg_gloss-wave_75_2191c0_500x100.png.xhtml?ln=primefaces-start)
+		50% 50% repeat-x;
+	margin: 0.2em !important;
+	color: #000 !important;
+}
+
+.ui-panel.styled>.ui-panel-content .centredList li {
+	text-align: center;
+}
+
+.labeled-rows .ui-grid-row .ui-panelgrid-cell, .labeled-rows tr td {
+	text-align: left;
+}
+
+.labeled-rows .ui-grid-row .ui-panelgrid-cell:FIRST-CHILD, .labeled-rows tr td:FIRST-CHILD
+	{
+	text-align: right;
+}
+
+@media ( max-width : 640px) {
+	.labeled-rows .ui-grid-row .ui-panelgrid-cell, .labeled-rows tr td {
+		text-align: center !important;
+	}
+}
+
+.input-table {
+	width: 100%;
+	color: #fff;
+	margin-bottom: 1em;
+}
+
+.input-table tbody {
+	background: none !important;
+}
+
+.inlined-toolbar {
+	color: #fff;
+	text-align: center;
+	margin: 1em 0em;
+}
+
+.inlined {
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+}
+
+.left-inlined {
+	margin-left: 0.5em;
+	margin-right: 0em;
+}
+
+.right-inlined {
+	margin-left: 0em;
+	margin-right: 0.5em;
+}
+
+.ui-paginator .ui-icon {
+	line-height: 1em;
+}
+
+.ui-orderlist li {
+	margin: 3px !important;
+	color: #fff !important;
+}
+
+.ui-orderlist-controls {
+	width: 8%;
+	margin-right: 5px !important;
+}
+
+.ui-orderlist-controls>.ui-button {
+	max-width: 40px;
+	height: 35px;
+	margin-left: auto;
+	margin-right: 5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.ui-orderlist-item[data-item-value^="true"]:NOT(.ui-state-highlight) {
+	-webkit-filter: hue-rotate(-90deg);
+	filter: hue-rotate(-90deg);
+}
+
+.ui-orderlist-item[data-item-value^="true"].ui-state-highlight {
+	-webkit-filter: hue-rotate(-30deg);
+	filter: hue-rotate(-30deg);
+}
+
+.ui-orderlist-controls>.ui-button:FIRST-CHILD {
+	margin-top: 15px;
+}
+
+.boolean-button {
+	width: 77px !important;
+}

@@ -1,0 +1,9 @@
+#!/bin/bash
+# Builds image usage information.
+
+echo "running pre usage hook..."
+# hook script
+echo "...hook done"
+
+# Execute the default S2I script
+exec /usr/libexec/s2i/usage

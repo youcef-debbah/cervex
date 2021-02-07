@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib version="2.2"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facelettaglibrary_2_2.xsd ">
+
+	<namespace>http://jsoftware95.rhcloud.com/ui</namespace>
+
+	<tag>
+		<tag-name>reveal</tag-name>
+		<source>tags/reveal.xhtml</source>
+		<attribute>
+			<description><![CDATA[General theme, one of: beige, black, blood, league, moon, night, serif, simple, sky, solarized, white (default: white)]]></description>
+			<name>theme</name>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Display controls in the bottom right corner (default: true)]]></description>
+			<name>controls</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Display a presentation progress bar (default: true)]]></description>
+			<name>progress</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Display the page number of the current slide (default: false)]]></description>
+			<name>slideNumber</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Push each slide change to the browser history (default: false)]]></description>
+			<name>history</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Enable keyboard shortcuts for navigation (default: true)]]></description>
+			<name>keyboard</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Enable the slide overview mode (default: true)]]></description>
+			<name>overview</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Vertical centering of slides (default: true)]]></description>
+			<name>center</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Enables touch navigation on devices with touch input (default: true)]]></description>
+			<name>touch</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Loop the presentation (default: false)]]></description>
+			<name>loop</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Change the presentation direction to be RTL (default: false)]]></description>
+			<name>rtl</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Randomizes the order of slides each time the presentation loads (default: false)]]></description>
+			<name>shuffle</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Turns fragments on and off globally (default: true)]]></description>
+			<name>fragments</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Flags if the presentation is running in an embedded mode, i.e. contained within a limited portion of the screen (default: false)]]></description>
+			<name>embedded</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Flags if we should show a help overlay when the questionmark key is pressed (default: true)]]></description>
+			<name>help</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Flags if speaker notes should be visible to all viewers (default: false)]]></description>
+			<name>showNotes</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Number of milliseconds between automatically proceeding to the next slide, disabled when set to 0, this value can be overwritten by using a data-autoslide attribute on your slides (default: 0)]]></description>
+			<name>autoSlide</name>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Stop auto-sliding after user input (default: true)]]></description>
+			<name>autoSlideStoppable</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Use this method for navigation when auto-sliding (default: Reveal.navigateNext)]]></description>
+			<name>autoSlideMethod</name>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Enable slide navigation via mouse wheel (default: false)]]></description>
+			<name>mouseWheel</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Hides the address bar on mobile devices (default: true)]]></description>
+			<name>hideAddressBar</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Opens links in an iframe preview overlay (default: false)]]></description>
+			<name>previewLinks</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Transition style, one of: none, default, fade, slide, convex, concave, zoom (default: default)]]></description>
+			<name>transition</name>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Transition speed, one of: default, fast, slow (default: default)]]></description>
+			<name>transitionSpeed</name>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Transition style for full page slide backgrounds, one of: none, default, fade, slide, convex, concave, zoom (default: default)]]></description>
+			<name>backgroundTransition</name>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Number of slides away from the current that are visible (default: 3)]]></description>
+			<name>viewDistance</name>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Parallax background image, e.g. https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg (default: {empty string})]]></description>
+			<name>parallaxBackgroundImage</name>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Parallax background size, CSS syntax, e.g.'2100px 900px' (default: {empty string})]]></description>
+			<name>parallaxBackgroundSize</name>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Number of pixels to move the parallax background per slide -Calculated automatically unless specified- Set to 0 to disable movement along horizontal axis (default: 0)]]></description>
+			<name>parallaxBackgroundHorizontal</name>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Number of pixels to move the parallax background per slide -Calculated automatically unless specified- Set to 0 to disable movement along vertical axis (default: 0)]]></description>
+			<name>parallaxBackgroundVertical</name>
+			<type>java.lang.Integer</type>
+		</attribute>
+	</tag>
+
+</facelet-taglib>

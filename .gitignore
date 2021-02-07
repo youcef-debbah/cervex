@@ -1,0 +1,22 @@
+# Eclipse files
+target
+.classpath
+.settings
+.project
+.tern-project
+
+# Intellij IDEA files
+.idea
+*.iml
+
+# pre-processors temp files
+# CSS files
+*.scss
+#*.css to be added in the next project
+#*.css.map to be added in the next project
+!*.min.css
+!*.min.css.map
+# JavaScript files
+#*.js to be added in the next project
+!*.min.js
+

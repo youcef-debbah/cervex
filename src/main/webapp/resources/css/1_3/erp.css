@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+
+.erpSlids section {
+	color: white;
+	background-color: rgba(0, 0, 0, .9);
+	padding: 20px !important;
+}
+
+.reveal h1 {
+	color: #9bff9b!important;
+	font-weight: bolder;
+	
+}
+
+.reveal h2 {
+	color: white !important;
+}
+
+.reveal .slides > section.present {
+	padding: 1em !important;
+}
