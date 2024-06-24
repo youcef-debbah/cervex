@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<h:outputStylesheet library="extra" name="tp.css" />
+		<ui:param name="title" value="TP MOS" />
+		<ui:param name="wrapperClass" value="homePage" />
+
+		<h:form>
+			<p:panel id="mainPanel" header="Queueing system simulation"
+				styleClass="mainPage styled">
+
+				<h:panelGroup id="inputPanel" layout="block">
+					<p:panelGrid columns="2"
+						styleClass="input-table ui-panelgrid-blank labeled-rows">
+						<h:panelGroup>
+							<h:outputText value="Start time:" styleClass="inlined" />
+							<p:spinner value="#{statistics.startTime_hour}" min="0" max="23"
+								suffix=" h" size="2" />
+							<h:outputText value="at:" styleClass="left-inlined" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<p:spinner value="#{statistics.startTime_min}" min="0" max="59"
+								suffix=" min" size="4" />
+							<h:outputText value="and" styleClass="inlined" />
+							<p:spinner value="#{statistics.startTime_sec}" min="0" max="59"
+								suffix=" sec" size="4" />
+						</h:panelGroup>
+						<h:outputText value="Minimum service duration:" />
+						<h:panelGroup>
+							<p:spinner value="#{statistics.minServiceDuration_min}" min="0"
+								max="59" suffix=" min" size="4" />
+							<h:outputText value="and" styleClass="inlined" />
+							<p:spinner value="#{statistics.minServiceDuration_sec}" min="0"
+								max="59" suffix=" sec" size="4" />
+						</h:panelGroup>
+						<h:outputText value="Average service duration:" />
+						<h:panelGroup>
+							<p:spinner value="#{statistics.averageServiceDuration_min}"
+								styleClass="output" min="0" max="59" suffix=" min" size="4" />
+							<h:outputText value="and" styleClass="inlined" />
+							<p:spinner value="#{statistics.averageServiceDuration_sec}"
+								styleClass="output" min="0" max="59" suffix=" sec" size="4" />
+						</h:panelGroup>
+					</p:panelGrid>
+
+					<p:orderList id="orderList" widgetVar="orderList"
+						value="#{statistics.periods}" var="period" responsive="true"
+						itemValue="#{period}" styleClass="centredList"
+						converter="periodConverter" moveTopLabel="move to top"
+						moveBottomLabel="move to bottom" moveUpLabel="move up"
+						moveDownLabel="move down">
+						<p:column>
+							<h:outputText value="from #{period.start}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="to #{period.end}" />
+						</p:column>
+						<p:column style="width: 35%">
+							<h:outputText
+								value="#{period.breakTime? 'break' : 'work'} time (#{period})" />
+						</p:column>
+						<p:column>
+							<h:outputText value="clients per min: #{period.clientsRate}" />
+						</p:column>
+						<p:column style="width: 55px">
+							<p:commandButton icon="fa fa-trash" process="inputPanel"
+								update="orderList @(.output)" styleClass="inlined"
+								action="#{statistics.removeWorkPeriod}">
+								<f:param name="period" value="#{period.id}" />
+							</p:commandButton>
+						</p:column>
+						<p:ajax event="reorder" listener="#{statistics.refresh}"
+							onstart="jsoftware95.savePeriodChangeListenerStat()"
+							oncomplete="jsoftware95.loadPeriodChangeListenerStat()"
+							process="inputPanel" update="orderList @(.output)" />
+					</p:orderList>
+
+					<h:panelGroup styleClass="inlined-toolbar" layout="block">
+						<h:outputText value="New" styleClass="inlined" />
+						<p:selectBooleanButton onLabel="break" offLabel="work"
+							styleClass="boolean-button" value="#{statistics.breakTime}">
+							<p:ajax process="@this" update="clientsRate" global="false" />
+						</p:selectBooleanButton>
+						<h:outputText value="time of:" styleClass="inlined" />
+						<p:spinner value="#{statistics.duration_hour}" min="0" max="23"
+							suffix=" h" size="2" />
+						<h:outputText value="and" styleClass="inlined" />
+						<p:spinner value="#{statistics.duration_min}" min="0" max="59"
+							suffix=" min" size="4" />
+						<h:outputText value="with an average clients per minute rate of:"
+							styleClass="inlined" />
+						<p:inputNumber id="clientsRate" disabled="#{statistics.breakTime}"
+							value="#{statistics.breakTime? 0 : statistics.clientsRate}"
+							minValue="0" styleClass="right-inlined" maxValue="120" size="4"
+							decimalPlaces="2" />
+
+						<p:commandButton id="addPeriod" styleClass="inlined"
+							action="#{statistics.addWorkPeriod}" icon="fa fa-plus"
+							process="inputPanel" update="orderList @(.output)" />
+
+						<p:commandButton id="refresh" styleClass="inlined"
+							action="#{statistics.refresh}" icon="fa fa-refresh"
+							process="inputPanel" update="@(.output)" />
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<p:panel header="General statistics" toggleable="true"
+					toggleSpeed="0" styleClass="output">
+					<p:panelGrid columns="2" layout="grid"
+						styleClass="labeled-rows whiteText">
+						<h:outputText value="Total clients:" />
+						<h:outputText value="#{statistics.counter.totalCustomers}" />
+
+						<h:outputText value="Proportion of served clients:" />
+						<h:outputText value="#{statistics.counter.servedProportion}" />
+
+						<h:outputText value="Proportion of server idle time:" />
+						<h:outputText value="#{statistics.counter.idleProportion}" />
+
+						<h:outputText value="Average waiting time:" />
+						<h:outputText value="#{statistics.counter.averageWaitingTime}" />
+
+						<h:outputText value="Probability that a customer has to wait:" />
+						<h:outputText
+							value="#{statistics.counter.customersHasToWaitProportion}" />
+
+						<h:outputText value="Average waiting time of those who wait:" />
+						<h:outputText
+							value="#{statistics.counter.averageWaitingTimeOfWhoWait}" />
+
+						<h:outputText value="Average time between arrivals:" />
+						<h:outputText
+							value="#{statistics.counter.averageDurationBetweenArrivals}" />
+
+						<h:outputText value="Average time a customer spends in system:" />
+						<h:outputText
+							value="#{statistics.counter.averageDurationInSystem}" />
+					</p:panelGrid>
+				</p:panel>
+
+				<p:dataTable value="#{statistics.records}" var="record"
+					draggableColumns="true" emptyMessage="There is nothing to display!"
+					styleClass="output textToCenter" rows="30" paginator="true">
+					<p:column headerText="Number" style="width: 60px">
+						<h:outputText value="#{record.number}" />
+					</p:column>
+					<p:column headerText="Arrive Time" style="width: 18%">
+						<h:outputText value="#{record.visitTime}" />
+					</p:column>
+					<p:column headerText="Service Time" style="width: 18%">
+						<h:outputText value="#{record.serviceTime}" />
+					</p:column>
+					<p:column headerText="Service End Time" style="width: 18%">
+						<h:outputText value="#{record.endServiceTime}" />
+					</p:column>
+					<p:column headerText="Waiting Duration">
+						<h:outputText value="#{record.waitingDuration}" />
+						<f:facet name="footer">
+							<h:outputText value="#{statistics.counter.totalWaitingDuration}" />
+						</f:facet>
+					</p:column>
+					<p:column headerText="Duration Inside System">
+						<h:outputText value="#{record.totalDurationInsideSystem}" />
+						<f:facet name="footer">
+							<h:outputText value="#{statistics.counter.totalDurationInSystem}" />
+						</f:facet>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+
+		<p:ajaxStatus>
+			<f:facet name="start">
+				<h:panelGroup id="status" layout="block">
+					<h:outputText value="loading..." />
+				</h:panelGroup>
+			</f:facet>
+		</p:ajaxStatus>
+		<ui:define name="footer" />
+	</ui:composition>
+</h:body>
+</html>

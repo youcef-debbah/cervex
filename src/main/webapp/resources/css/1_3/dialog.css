@@ -1,0 +1,53 @@
+@CHARSET "UTF-8";
+
+body {
+	background: rgb(60, 60, 60);
+}
+
+body>form {
+	height: 100%;
+	background: transparent;
+}
+
+.dialogForm {
+	padding: 1em;
+}
+
+.dialogForm .ui-messages-error {
+	margin: 0px;
+}
+
+.smallTitle {
+	margin-right: 0.5em;
+}
+
+.ui-panel.dialogPanel {
+	position: relative;
+	padding: 0.5em 1em;
+	height: calc(100% - 1em);
+	border: none;
+	background: none;
+}
+
+.ui-panel.dialogPanel>.ui-panel-content {
+	padding: 1em;
+	width: calc(100% - 4em);
+	position: absolute;
+	top: calc(50% - 1.3em);
+	transform: translateY(-50%);
+}
+
+.ui-panel.dialogPanel>.ui-panel-footer {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	width: calc(100% - 3em);
+	background: none;
+	border: none;
+	border-top-width: 2px;
+	border-top-style: groove;
+	border-top-color: rgba(100, 100, 100, 0.75);
+	border-radius: 3px;
+	padding: 0.5em;
+	margin: 0em 1em;
+}

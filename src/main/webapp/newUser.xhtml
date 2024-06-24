@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+    <ui:composition template="/templates/layout.xhtml">
+        <ui:param name="title" value="#{login.singUp}"/>
+        <ui:param name="wrapperClass" value="securityPage"/>
+
+        <h:form id="newUserForm" styleClass="styledForm">
+            <p:panel id="singUpPanel" header="#{userMsg.newAccount}"
+                     styleClass="styled">
+                <p:focus context="singUpPanel"/>
+                <p:blockUI block="singUpPanel" trigger="submit">
+                    <object type="image/svg+xml"
+                            data="#{resource['images:cervexLoading.svg']}" width="64"
+                            height="64">
+                        <h:graphicImage library="images" name="cervexLoading.gif"/>
+                    </object>
+                    <br/>
+                    <h:outputText value="#{general.loading}"/>
+                </p:blockUI>
+                <!-- first row -->
+                <p:panelGrid columns="2" layout="grid" styleClass="ui-fluid">
+                    <p:panelGrid columns="1" layout="grid">
+
+                        <p:outputLabel id="usernameLabel" for="username"
+                                       value="#{userMsg.username}" title="#{userMsg.usernameHelp}"/>
+
+                        <h:panelGroup styleClass="inputWrapper" layout="block">
+                            <span class="ui-icon fa fa-user"/>
+                            <p:inputText id="username" value="#{newUserManager.username}"
+                                         tabindex="1" placeholder="#{userMsg.usernameSyntax}"
+                                         required="true" title="#{userMsg.usernameHelp}">
+                                <p:ajax event="change"
+                                        update="usernameLabel username usernameMsgs"/>
+                            </p:inputText>
+                        </h:panelGroup>
+
+                        <p:messages id="usernameMsgs" for="username" showIcon="false"
+                                    closable="true">
+                            <p:effect event="load" type="bounce"/>
+                        </p:messages>
+
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="1" layout="grid">
+
+                        <p:outputLabel id="emailLabel" for="email"
+                                       value="#{userMsg.email}" title="#{userMsg.emailHelp}"/>
+
+                        <h:panelGroup styleClass="inputWrapper" layout="block">
+                            <span class="ui-icon fa fa-at"/>
+                            <p:inputText id="email" value="#{newUserManager.email}"
+                                         tabindex="5" placeholder="#{userMsg.emailSyntax}"
+                                         required="true" title="#{userMsg.emailHelp}">
+                                <p:ajax event="change" update="emailLabel email emailMsgs"/>
+                            </p:inputText>
+                        </h:panelGroup>
+
+                        <p:messages id="emailMsgs" for="email" showIcon="false"
+                                    closable="true">
+                            <p:effect event="load" type="bounce"/>
+                        </p:messages>
+
+                    </p:panelGrid>
+                </p:panelGrid>
+                <!-- second row -->
+                <p:panelGrid columns="2" layout="grid" styleClass="ui-fluid">
+                    <p:panelGrid columns="1" layout="grid">
+
+                        <p:outputLabel id="passwordLabel" for="password"
+                                       value="#{userMsg.password}" title="#{userMsg.passwordHelp}"/>
+
+                        <h:panelGroup styleClass="inputWrapper" layout="block">
+                            <span class="ui-icon fa fa-lock"/>
+                            <p:password id="password" redisplay="false"
+                                        value="#{newUserManager.password}" tabindex="2" required="true"
+                                        title="#{userMsg.passwordHelp}"
+                                        placeholder="#{userMsg.passwordSyntax}" feedback="true"
+                                        inline="true" promptLabel="#{general.enterPassword}"
+                                        weakLabel="#{general.weak}" goodLabel="#{general.good}"
+                                        strongLabel="#{general.strong}"/>
+                        </h:panelGroup>
+
+                        <p:messages id="passwordMsgs" for="password" showIcon="false"
+                                    closable="true">
+                            <p:effect event="load" type="bounce"/>
+                        </p:messages>
+
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="1" layout="grid">
+
+                        <p:outputLabel id="entrepriseNameLabel" for="entrepriseName"
+                                       value="#{userMsg.enterpriseName}"
+                                       title="#{userMsg.enterpriseNameHelp}"/>
+
+                        <h:panelGroup styleClass="inputWrapper" layout="block">
+                            <span class="ui-icon fa fa-gear"/>
+                            <p:inputText id="entrepriseName"
+                                         value="#{newUserManager.enterpriseName}" tabindex="6"
+                                         title="#{userMsg.enterpriseNameHelp}"
+                                         placeholder="#{userMsg.enterpriseNameSyntax}">
+                                <p:ajax event="change"
+                                        update="entrepriseNameLabel entrepriseName entrepriseNameMsgs"/>
+                            </p:inputText>
+                        </h:panelGroup>
+
+                        <p:messages id="entrepriseNameMsgs" for="entrepriseName"
+                                    showIcon="false" closable="true">
+                            <p:effect event="load" type="bounce"/>
+                        </p:messages>
+
+                    </p:panelGrid>
+                </p:panelGrid>
+                <!-- third row -->
+                <p:panelGrid columns="2" layout="grid" styleClass="ui-fluid">
+                    <p:panelGrid columns="1" layout="grid">
+
+                        <p:outputLabel id="passwordConfLabel" for="passwordConf"
+                                       value="#{userMsg.passwordConfirm}"
+                                       title="#{userMsg.passwordHelp}"/>
+
+                        <h:panelGroup styleClass="inputWrapper" layout="block">
+                            <span class="ui-icon fa fa-lock"/>
+                            <p:password id="passwordConf" redisplay="false"
+                                        value="#{newUserManager.passwordConfirm}" required="true"
+                                        title="#{userMsg.passwordHelp}" feedback="false"
+                                        placeholder="#{userMsg.passwordConfirmSyntax}" tabindex="3">
+                                <p:ajax event="change"
+                                        update="phoneNumberLabel phoneNumber phoneNumberMsgs"/>
+                            </p:password>
+                        </h:panelGroup>
+
+                        <p:messages id="passwordConfMsgs" for="passwordConf"
+                                    showIcon="false" closable="true" autoUpdate="true">
+                            <p:effect event="load" type="bounce"/>
+                        </p:messages>
+
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="1" layout="grid">
+
+                        <p:outputLabel id="enterpriseAddressLabel" for="enterpriseAddress"
+                                       value="#{userMsg.enterpriseAddress}"
+                                       title="#{userMsg.enterpriseAddressHelp}"/>
+
+                        <h:panelGroup styleClass="inputWrapper" layout="block">
+                            <span class="ui-icon fa fa-map-marker"/>
+                            <p:inputText id="enterpriseAddress"
+                                         value="#{newUserManager.enterpriseAddress}" tabindex="7"
+                                         placeholder="#{userMsg.enterpriseAddressSyntax}"
+                                         title="#{userMsg.enterpriseAddressHelp}">
+                                <p:ajax event="change"
+                                        update="enterpriseAddressLabel enterpriseAddress enterpriseAddressMsgs"/>
+                            </p:inputText>
+                        </h:panelGroup>
+
+                        <p:messages id="enterpriseAddressMsgs" for="enterpriseAddress"
+                                    showIcon="false" closable="true">
+                            <p:effect event="load" type="bounce"/>
+                        </p:messages>
+
+                    </p:panelGrid>
+                </p:panelGrid>
+                <!-- fourth row -->
+                <p:panelGrid columns="2" layout="grid" styleClass="ui-fluid">
+                    <p:panelGrid columns="1" layout="grid">
+
+                        <p:outputLabel id="phoneNumberLabel" for="phoneNumber"
+                                       value="#{userMsg.phoneNumber}" title="#{userMsg.phoneNumberHelp}"/>
+
+                        <h:panelGroup styleClass="inputWrapper" layout="block">
+                            <span class="ui-icon fa fa-phone"/>
+                            <p:inputMask id="phoneNumber"
+                                         value="#{newUserManager.phoneNumber}" mask="09 99 99 99 99"
+                                         placeholder="__ __ __ __ __" required="true"
+                                         title="#{userMsg.phoneNumberHelp}" tabindex="4">
+                                <p:ajax event="change"
+                                        update="phoneNumberLabel phoneNumber phoneNumberMsgs"/>
+                            </p:inputMask>
+                        </h:panelGroup>
+
+                        <p:messages id="phoneNumberMsgs" for="phoneNumber"
+                                    showIcon="false" closable="true">
+                            <p:effect event="load" type="bounce"/>
+                        </p:messages>
+
+                    </p:panelGrid>
+
+                    <p:panelGrid columns="1" layout="grid">
+
+                        <p:outputLabel id="websiteLabel" for="website"
+                                       value="#{userMsg.website}" title="#{userMsg.websiteHelp}"/>
+
+                        <h:panelGroup styleClass="inputWrapper" layout="block">
+                            <span class="ui-icon fa fa-globe"/>
+                            <p:inputText id="website" value="#{newUserManager.website}"
+                                         tabindex="8" title="#{userMsg.websiteHelp}"
+                                         placeholder="#{userMsg.websiteSyntax}">
+                                <p:ajax event="change" update="websiteLabel website websiteMsgs"/>
+                            </p:inputText>
+                        </h:panelGroup>
+
+                        <p:messages id="websiteMsgs" for="website" showIcon="false"
+                                    closable="true">
+                            <p:effect event="load" type="bounce"/>
+                        </p:messages>
+
+                    </p:panelGrid>
+                </p:panelGrid>
+                <!-- captcha -->
+                <!--                <p:panelGrid columns="1" layout="grid">-->
+                <!--                    <h:panelGroup layout="block" styleClass="center">-->
+                <!--                        <p:captcha theme="dark" language="#{localeManager.language}"-->
+                <!--                                   tabindex="9"/>-->
+                <!--                    </h:panelGroup>-->
+                <!--                </p:panelGrid>-->
+                <!-- hint -->
+                <p:separator/>
+                <h:panelGroup styleClass="hint">
+                    <h:outputText value="#{userMsg.youAlreadyHaveAcc}"/>
+                    <p:link outcome="login" value="#{login.singIn}"
+                            styleClass="inlinedLink" tabindex="11"/>
+                </h:panelGroup>
+
+                <f:facet name="footer">
+                    <p:commandButton id="submit" value="#{login.singUp}"
+                                     action="#{newUserManager.create}" update="@form" tabindex="10"/>
+                </f:facet>
+            </p:panel>
+        </h:form>
+
+    </ui:composition>
+</h:body>
+</html>

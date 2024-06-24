@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition>
+		<h:form prependId="false">
+			<p:menu id="sideMenu" styleClass="yellowHover">
+				<p:submenu label="#{general.lang}">
+
+					<p:menuitem value="Français" onclick="jsoftware95.preAction()"
+						actionListener="#{localeManager.setLanguage('fr')}" update="@all"
+						rendered="#{not localeManager.language.startsWith('fr')}">
+						<f:param name="lazy" value="#{request.getParameter('lazy')}" />
+					</p:menuitem>
+
+					<p:menuitem value="English" onclick="jsoftware95.preAction()"
+						actionListener="#{localeManager.setLanguage('en')}" update="@all"
+						rendered="#{not localeManager.language.startsWith('en')}">
+						<f:param name="lazy" value="#{request.getParameter('lazy')}" />
+					</p:menuitem>
+
+				</p:submenu>
+
+				<p:submenu label="#{general.navigation}">
+					<p:menuitem value="#{general.homePage}"
+								onclick="jsoftware95.preAction()" outcome="homePage" />
+					<p:menuitem value="#{aboutUs.title}"
+					onclick="jsoftware95.preAction()" outcome="aboutUs" />
+					<p:menuitem value="#{blog.label}" outcome="posts"
+						onclick="jsoftware95.preAction()" />
+				</p:submenu>
+				<p:submenu label="#{general.ourServices}">
+					<p:menuitem value="#{erp.title}" onclick="jsoftware95.preAction()" outcome="erp" />
+
+					<p:menuitem value="#{applications.title}"
+						onclick="jsoftware95.preAction()" outcome="applications" />
+
+					<p:menuitem value="#{training.title}"
+						onclick="jsoftware95.preAction()" outcome="training" />
+				</p:submenu>
+				<p:submenu
+					label="#{meta.principalInAdminRole? adminMsg.administration : userMsg.yourAccount}">
+					<p:menuitem value="#{article.business}" outcome="business"
+						rendered="#{meta.principalInUserRole}"
+						onclick="jsoftware95.preAction()" />
+
+					<p:menuitem value="#{article.title}"
+						onclick="jsoftware95.preAction()" outcome="applyForArticle"
+						rendered="#{meta.principalInUserRole}" />
+
+					<p:menuitem value="#{userMsg.profile}"
+						onclick="jsoftware95.preAction()" outcome="userProfile"
+						rendered="#{meta.principalInUserRole}" />
+
+					<p:menuitem value="#{adminMsg.generalStat}" outcome="statistics"
+						rendered="#{meta.principalInAdminRole}"
+						onclick="jsoftware95.preAction()" />
+
+					<p:menuitem value="#{article.allApplies}" outcome="applies"
+						rendered="#{meta.principalInAdminRole}"
+						onclick="jsoftware95.preAction()" />
+
+					<p:menuitem value="#{article.allArticles}" outcome="articles"
+						rendered="#{meta.principalInAdminRole}"
+						onclick="jsoftware95.preAction()" />
+
+					<p:menuitem value="#{userMsg.clientsAccounts}" outcome="accounts"
+						rendered="#{meta.principalInAdminRole}"
+						onclick="jsoftware95.preAction()" />
+
+					<p:menuitem value="#{blog.comments}" outcome="newComments"
+						rendered="#{meta.principalInAdminRole}"
+						onclick="jsoftware95.preAction()" />
+
+					<p:menuitem value="#{messaging.inbox}"
+						onclick="jsoftware95.preAction()" outcome="inbox"
+						rendered="#{not empty request.userPrincipal}" />
+
+					<p:menuitem value="#{login.singIn}"
+						onclick="jsoftware95.preAction()"
+						rendered="#{empty request.userPrincipal}" outcome="login">
+						<!--suppress ELValidationInJSP -->
+						<f:param name="nextView" value="#{view.viewId}" />
+					</p:menuitem>
+
+					<p:menuitem value="#{login.singUp}"
+						onclick="jsoftware95.preAction()"
+						rendered="#{empty request.userPrincipal}" outcome="newUser" />
+
+					<p:menuitem value="#{login.singOut}"
+						onclick="jsoftware95.preAction()"
+						rendered="#{not empty request.userPrincipal}"
+						action="#{meta.logout}" />
+				</p:submenu>
+			</p:menu>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

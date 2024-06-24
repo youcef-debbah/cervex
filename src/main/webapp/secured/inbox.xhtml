@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:param name="title" value="#{messaging.inbox}" />
+		<ui:param name="wrapperClass" value="messagingPage" />
+
+		<ui:define name="metadata">
+			<f:metadata>
+				<f:viewParam name="onlyNew" value="#{inboxManager.onlyNew}" />
+			</f:metadata>
+		</ui:define>
+
+		<h:form id="inboxForm" styleClass="centered notificationListener">
+			<p:panel id="inbox" header="#{messaging.inbox}"
+				styleClass="mainPage styled">
+				<p:blockUI block="inbox"
+					trigger="newMessageButton, replayButton, onlyNewCheckbox">
+					<object type="image/svg+xml"
+						data="#{resource['images:cervexLoading.svg']}" width="64"
+						height="64">
+						<h:graphicImage library="images" name="cervexLoading.gif" />
+					</object>
+					<br />
+					<h:outputText value="#{general.loading}" />
+				</p:blockUI>
+
+				<p:toolbar styleClass="bigIcons">
+					<f:facet name="left">
+						<p:commandButton id="newMessageButton"
+							value="#{messaging.newMessage}" icon="fa fa-envelope-o"
+							actionListener="#{inboxManager.newMessage}">
+							<p:ajax event="dialogReturn"
+								listener="#{inboxManager.onMessageSend}" update="@form" />
+						</p:commandButton>
+						<p:commandButton id="replayButton" value="#{messaging.reply}"
+							icon="fa fa-mail-reply"
+							disabled="#{empty inboxManager.selectedMessage}"
+							actionListener="#{inboxManager.reply}">
+							<p:ajax event="dialogReturn"
+								listener="#{inboxManager.onMessageSend}" update="@form" />
+						</p:commandButton>
+						<h:outputText value="#{messaging.onlyNewMessages}"
+							styleClass="inlined" />
+						<p:selectBooleanCheckbox id="onlyNewCheckbox"
+							value="#{inboxManager.onlyNew}">
+							<p:ajax listener="#{inboxManager.onOnlyNewClick}" update="@form" />
+						</p:selectBooleanCheckbox>
+					</f:facet>
+				</p:toolbar>
+
+				<p:separator />
+
+				<p:dataTable widgetVar="dataTableWV" var="message"
+					value="#{inboxManager.messages}" draggableColumns="true"
+					emptyMessage="#{general.noData}" selectionMode="single"
+					selection="#{inboxManager.selectedMessage}"
+					rowKey="#{message.messageID}">
+
+					<p:column width="17">
+						<p:rowToggler />
+					</p:column>
+
+					<p:column headerText="#{general.date}">
+						<h:outputText value="#{message.sendingDate}" />
+						<h:outputText value=" #{general.new}" styleClass="newLabel"
+							rendered="#{message.new}" />
+					</p:column>
+
+					<p:column headerText="#{messaging.from}">
+						<h:outputText value="#{message.sender.username}" />
+					</p:column>
+
+					<p:column headerText="#{messaging.title}">
+						<h:outputText value="#{message.title}" styleClass="hasID"
+							title="#{message.messageID}" />
+					</p:column>
+
+					<p:rowExpansion styleClass="autoWidth">
+						<h3>#{messaging.text}</h3>
+						<p:editor value="#{message.text}" controls="copy print"
+							styleClass="outputEditor" />
+					</p:rowExpansion>
+
+					<p:ajax event="rowSelect" update="@(.notificationListener)" />
+				</p:dataTable>
+
+				<p:remoteCommand name="onRowToggle"
+					actionListener="#{inboxManager.onMessageToggle}"
+					update=":headerForm" />
+			</p:panel>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:param name="title" value="#{adminMsg.generalStat}" />
+		<p:socket onMessage="handleMessage"
+			channel="#{commandBoard.visitorsCounterChannel}" />
+
+		<p:panel id="visitorsStatPanel" header="#{general.visitorsStat}"
+			styleClass="mainPage styled">
+			<h:form id="visitorsStat">
+				<p:blockUI block="visitorsStatPanel" trigger="updateButton">
+					<object type="image/svg+xml"
+						data="#{resource['images:cervexLoading.svg']}" width="64"
+						height="64">
+						<h:graphicImage library="images" name="cervexLoading.gif" />
+					</object>
+					<br />
+					<h:outputText value="#{general.loading}" />
+				</p:blockUI>
+
+				<p:outputPanel id="visitorsChart" style="#{commandBoard.chartStyle}"
+					styleClass="cervexLoading"
+					deferred="#{request.getParameter('lazy') == 'off'? false : true}">
+					<p:chart type="bar" model="#{commandBoard.visitorsChartModel}"
+						responsive="true" style="#{commandBoard.chartStyle}" />
+				</p:outputPanel>
+				<p:separator />
+				<p:toolbar>
+					<f:facet name="left">
+						<p:outputLabel for="visitorsStatFrom"
+							value="#{adminMsg.showStatFrom}" styleClass="spaced" />
+						<p:calendar id="visitorsStatFrom"
+							value="#{commandBoard.visitorsStatFrom}" pattern="dd MMMM yyyy"
+							showButtonPanel="true" showOtherMonths="true"
+							selectOtherMonths="true" mindate="#{meta.beginningOfTime}"
+							maxdate="#{meta.currentTime}" />
+						<p:outputLabel for="visitorsStatTo" value="#{adminMsg.showStatTo}"
+							styleClass="spaced" />
+						<p:calendar id="visitorsStatTo"
+							value="#{commandBoard.visitorsStatTo}" pattern="dd MMMM yyyy"
+							showButtonPanel="true" showOtherMonths="true"
+							selectOtherMonths="true" mindate="#{meta.beginningOfTime}"
+							maxdate="#{meta.currentTime}" />
+					</f:facet>
+					<f:facet name="right">
+						<p:commandButton id="updateButton" value="#{general.fetch}"
+							process="@form" update="visitorsChart"
+							actionListener="#{commandBoard.updateVisitorsModel}" />
+					</f:facet>
+				</p:toolbar>
+				<p:separator />
+				<p:panelGrid columns="4" layout="grid"
+					styleClass="ui-panelgrid-blank whiteText">
+					<h:outputText id="currentVisitors"
+						value="#{general.currentVisitors}" />
+					<h:outputText styleClass="counterListener"
+						value="#{commandBoard.currentVisitors}" />
+
+					<h:outputText value="#{general.totalVisitors}" />
+					<h:outputText value="#{commandBoard.totalVisitors}" />
+				</p:panelGrid>
+			</h:form>
+		</p:panel>
+
+		<p:panelGrid columns="1" layout="grid"
+			styleClass="ui-panelgrid-blank mainPage sameRowHeight">
+			<p:panel header="#{article.demandsStat}" styleClass="styled centered">
+				<p:outputPanel style="#{commandBoard.chartStyle}"
+					styleClass="cervexLoading"
+					deferred="#{request.getParameter('lazy') == 'off'? false : true}"
+					rendered="#{not empty commandBoard.appliesChartModel.data}">
+					<p:chart type="pie" responsive="true"
+						model="#{commandBoard.appliesChartModel}"
+						style="#{commandBoard.chartStyle}" />
+				</p:outputPanel>
+				<p:separator
+					rendered="#{not empty commandBoard.appliesChartModel.data}" />
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="ui-panelgrid-blank whiteText">
+					<h:outputText value="#{article.totalDemandsCount}" />
+					<h:outputText value="#{commandBoard.totalDemandsCount}" />
+
+					<h:outputText value="#{article.demandsPending}" />
+					<h:outputText value="#{commandBoard.pendingDemandsCount}" />
+				</p:panelGrid>
+			</p:panel>
+		</p:panelGrid>
+		
+		<p:separator />
+
+		<ui:define name="init">
+			<h:outputScript>function handleMessage(data){$('.counterListener').text(data);}</h:outputScript>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

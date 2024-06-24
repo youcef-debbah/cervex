@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:j="http://jsoftware95.rhcloud.com/ui">
+
+<h:head>
+	<title>#{erp.title}</title>
+	<h:outputStylesheet library="css" name="erp.css" />
+</h:head>
+
+<h:body>
+	<div class="reveal">
+		<div class="slides erpSlids">
+			<section>#{erp.adv_01}</section>
+			<section>
+				<p>#{erp.adv_02}</p>
+				<p class="fragment">#{erp.adv_02_1}</p>
+			</section>
+			<section>
+				<p>#{erp.adv_03}</p>
+				<ul>
+					<li class="fragment fade-up">#{erp.adv_03_1}</li>
+					<li class="fragment fade-up">#{erp.adv_03_2}</li>
+					<li class="fragment fade-up">#{erp.adv_03_3}</li>
+					<li class="fragment fade-up">#{erp.adv_03_4}</li>
+					<li class="fragment fade-up">#{erp.adv_03_5}</li>
+					<li class="fragment fade-up">#{erp.adv_03_6}</li>
+					<li class="fragment fade-up">#{erp.adv_03_7}</li>
+				</ul>
+			</section>
+			<section>#{erp.adv_04}</section>
+			<section>#{erp.adv_05}</section>
+			<section>#{erp.adv_06}</section>
+			<section>#{erp.adv_07}</section>
+			<section>#{erp.adv_08}</section>
+			<section>#{erp.adv_09}</section>
+			<section>#{erp.adv_10}</section>
+			<section>#{erp.adv_11}</section>
+		</div>
+	</div>
+	<j:reveal theme="sky" transition="slide" parallaxBackgroundHorizontal="50"
+		parallaxBackgroundImage="#{resource['images:erp.jpg']}" autoSlide="3000" />
+</h:body>
+</html>

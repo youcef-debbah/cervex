@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition>
+		<h:panelGroup id="defaultHeader" layout="block">
+
+			<p:commandLink onclick="jsoftware95.preAction()"
+				styleClass="langLink ui-icon fr" title="Français"
+				actionListener="#{localeManager.setLanguage('fr')}" update="@all"
+				rendered="#{not localeManager.language.startsWith('fr')}">
+				<f:param name="lazy" value="#{request.getParameter('lazy')}" />
+			</p:commandLink>
+
+			<p:commandLink onclick="jsoftware95.preAction()" icon="en"
+				styleClass="langLink ui-icon en" title="English"
+				actionListener="#{localeManager.setLanguage('en')}" update="@all"
+				rendered="#{not localeManager.language.startsWith('en')}">
+				<f:param name="lazy" value="#{request.getParameter('lazy')}" />
+			</p:commandLink>
+
+			<p:panelGrid columns="2" columnClasses="ui-grid-col-4, ui-grid-col-8"
+				layout="grid" styleClass="ui-fluid ui-panelgrid-blank">
+
+				<h:panelGroup layout="block" styleClass="mainLogo">
+					<object type="image/svg+xml"
+						data="#{resource['images:cervexLogo.svg']}" height="115">
+						<h:graphicImage library="images" name="cervexLogo.png"
+							alt="#{general.companyName}" />
+					</object>
+				</h:panelGroup>
+
+				<h:form id="headerForm" styleClass="notificationListener">
+					<p:menubar id="mainMenu">
+						<p:menuitem value="#{general.homePage}" outcome="homePage"
+							onclick="jsoftware95.preAction()" icon="fa fa-home" />
+
+						<p:submenu
+							label="#{meta.principalInAdminRole? adminMsg.administration : userMsg.yourAccount}"
+							icon="fa #{meta.principalInAdminRole? 'fa-desktop' : 'fa-user'}">
+							<p:menuitem value="#{article.business}" outcome="business"
+								rendered="#{meta.principalInUserRole}"
+								onclick="jsoftware95.preAction()"
+								icon="#{(localeManager.language == 'fr')? 'fa fa-euro' : 'fa fa-dollar'}" />
+
+							<p:menuitem value="#{article.title}" outcome="applyForArticle"
+								rendered="#{meta.principalInUserRole}"
+								onclick="jsoftware95.preAction()" icon="fa fa-cart-plus" />
+
+							<p:menuitem value="#{userMsg.profile}" outcome="userProfile"
+								rendered="#{meta.principalInUserRole}"
+								onclick="jsoftware95.preAction()" icon="fa fa-book" />
+
+							<p:menuitem value="#{adminMsg.generalStat}" outcome="statistics"
+								rendered="#{meta.principalInAdminRole}"
+								onclick="jsoftware95.preAction()" icon="fa fa-bar-chart" />
+
+							<p:menuitem value="#{article.allApplies}" outcome="applies"
+								rendered="#{meta.principalInAdminRole}"
+								onclick="jsoftware95.preAction()" icon="fa fa-list" />
+
+							<p:menuitem value="#{article.allArticles}" outcome="articles"
+								rendered="#{meta.principalInAdminRole}"
+								onclick="jsoftware95.preAction()" icon="fa fa-list" />
+
+							<p:menuitem value="#{userMsg.clientsAccounts}" outcome="accounts"
+								rendered="#{meta.principalInAdminRole}"
+								onclick="jsoftware95.preAction()" icon="fa fa-list" />
+
+							<p:menuitem value="#{blog.comments}" outcome="newComments"
+								rendered="#{meta.principalInAdminRole}"
+								onclick="jsoftware95.preAction()" icon="fa fa-list" />
+
+							<p:menuitem value="#{messaging.inbox}" outcome="inbox"
+								rendered="#{not empty request.userPrincipal}"
+								onclick="jsoftware95.preAction()" icon="fa fa-envelope-o" />
+
+							<p:menuitem value="#{login.singIn}" outcome="login"
+								rendered="#{empty request.userPrincipal}"
+								onclick="jsoftware95.preAction()" icon="fa fa-key">
+								<f:param name="nextView" value="#{view.viewId}" />
+							</p:menuitem>
+
+							<p:menuitem value="#{login.singUp}" outcome="newUser"
+								rendered="#{empty request.userPrincipal}"
+								onclick="jsoftware95.preAction()" icon="fa fa-user-plus" />
+
+							<p:menuitem value="#{login.singOut}" action="#{meta.logout}"
+								rendered="#{not empty request.userPrincipal}"
+								onclick="jsoftware95.preAction()" icon="fa fa-key" />
+						</p:submenu>
+
+						<p:submenu label="#{general.ourServices}" icon="fa fa-list-ul">
+							<p:menuitem value="#{erp.title}" outcome="erp"
+										onclick="jsoftware95.preAction()" icon="fa fa-laptop" />
+							<p:menuitem value="#{applications.title}" outcome="applications"
+								onclick="jsoftware95.preAction()" icon="fa fa-th" />
+							<p:menuitem value="#{training.title}" outcome="training"
+								onclick="jsoftware95.preAction()" icon="fa fa-users" />
+						</p:submenu>
+
+						<p:menuitem value="#{blog.label}" outcome="posts"
+							onclick="jsoftware95.preAction()" icon="fa fa-file-text" />
+
+						<p:menuitem value="#{aboutUs.title}" outcome="aboutUs"
+							onclick="jsoftware95.preAction()" icon="fa fa-info-circle" />
+
+						<p:menuitem id="notificationsBell"
+							value="#{notificationView.notificationCount}" icon="fa fa-bell"
+							rendered="#{not empty request.userPrincipal}"
+							styleClass="counter #{notificationView.notificationCount > 0? 'active' : ''}" />
+					</p:menubar>
+
+					<p:overlayPanel for="notificationsBell" my="right top"
+						at="right bottom" styleClass="notificationPanel styled">
+
+						<p:panelGrid columns="2" layout="grid"
+							styleClass="blueGlass header"
+							rendered="#{notificationView.notificationCount > 0}">
+							<h:outputText value="#{general.notifications}"
+								styleClass="notificationHeader" />
+
+							<p:commandLink value="#{general.clearAll}"
+								actionListener="#{notificationView.removeAll()}"
+								update="@(.notificationListener)" styleClass="inlinedLink" />
+						</p:panelGrid>
+
+						<p:scrollPanel style="height:380px"
+							styleClass="#{notificationView.notificationCount eq 0? 'fullHeight' : 'headerBorder'}">
+
+							<h:panelGroup layout="block" styleClass="container"
+								rendered="#{notificationView.notificationCount eq 0}">
+								<h:outputText value="#{general.nothingNew}"
+									styleClass="vCentred emptyContentsPlaceholder" />
+							</h:panelGroup>
+
+							<ui:repeat var="notification" varStatus="status"
+								value="#{notificationView.notifications}">
+
+								<p:separator
+									styleClass="#{status.first? 'thinSeparator' : 'headerSeparator'}" />
+
+								<p:panelGrid styleClass="noPadding notificationContentsPanel">
+									<p:row>
+										<p:column>
+											<p:panelGrid columns="1" layout="grid">
+												<h:panelGroup>
+													<h:outputText
+														styleClass="fa #{notification.icon} notificationIcon" />
+													<p:link value="#{notification.title}"
+														outcome="#{notification.outcome()}"
+														styleClass="notificationTitle">
+														<f:param name="onlyNew" value="true" />
+													</p:link>
+												</h:panelGroup>
+
+												<h:outputText value="#{notification.contents}"
+													styleClass="notificationContents" />
+											</p:panelGrid>
+										</p:column>
+										<p:column>
+											<p:commandButton icon="fa fa-check"
+												actionListener="#{notification.remove()}"
+												update="@(.notificationListener)"
+												styleClass="small wideIcon spaced" />
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+
+								<h:panelGroup layout="block" styleClass="textToLeft leftLabel">
+									<h:outputText value="#{notification.date}"
+										styleClass="smallHint" />
+								</h:panelGroup>
+
+							</ui:repeat>
+
+						</p:scrollPanel>
+					</p:overlayPanel>
+				</h:form>
+
+			</p:panelGrid>
+		</h:panelGroup>
+	</ui:composition>
+</h:body>
+</html>

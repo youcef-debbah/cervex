@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:cervex="http://jsoftware95.rhcloud.com/cervex"
+	lang="#{localeManager.language}">
+
+<f:view locale="#{localeManager.locale}">
+	<h:head>
+		<meta charset="UTF-8" />
+		<meta name="author" content="Youcef Debbah" />
+		<meta property="og:site_name"
+			content="#{general.companyName} official website" />
+		<meta property="og:title" content="#{general.companyName}" />
+		<meta property="og:description"
+			content="#{initParam['com.rhcloud.cervex_jsoftware95.description']}" />
+		<meta property="og:image"
+			content="#{resource['images:cervexLogo.png']}" />
+		<meta property="og:url"
+			content="https://cervex-jsoftware95.rhcloud.com" />
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['images:favicon.ico']}" />
+		<title>Cervex free proxy</title>
+		<style>
+#mainFrame {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 100%;
+	height: 100vh;
+	background: white;
+	border: none;
+	background: white;
+}
+</style>
+	</h:head>
+
+	<h:body>
+		<p:growl for="global" showSummary="true" showDetail="true"
+			autoUpdate="true" life="7000" />
+		<h:outputStylesheet library="css" name="layoutStyle.css" />
+		<h:outputScript library="js" name="galleria.js" />
+		<h:outputScript library="js" name="tools.js" />
+		<h:outputScript library="js" name="locals.js" />
+		<h:outputScript library="js" name="meny.js" />
+		<p:outputPanel styleClass="cervexLoading main"
+			deferred="#{request.getParameter('lazy') == 'off'? false : true}">
+
+			<div class="meny"
+				style="transform: translateX(-100%) translateX(6px) scale(1.01) rotateY(-30deg);">
+				<h:form prependId="false">
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank ui-fluid"
+						layout="grid">
+						<p:inputText id="src" value="#{proxyView.source}" required="true" />
+					</p:panelGrid>
+					<p:panelGrid columns="1" styleClass="ui-panelgrid-blank centered"
+						layout="grid">
+						<p:commandButton value="Go" update="pageWrapper" />
+					</p:panelGrid>
+				</h:form>
+			</div>
+
+			<div class="contents" onscroll="jsoftware95.updatePageWraper()">
+				<p:confirmDialog global="true" header="#{general.confirmation}"
+					message="#{general.areYouSure}" closeOnEscape="true"
+					showEffect="fold">
+					<p:commandButton value="#{general.yes}" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="#{general.no}" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+				<h:panelGroup id="pageWrapper"
+					styleClass="#{empty wrapperClass ? 'homePage' : wrapperClass}"
+					layout="block">
+					<!-- main page: start -->
+					<iframe id="mainFrame" src="#{proxyView.source}" />
+					<!-- main page: end -->
+				</h:panelGroup>
+			</div>
+
+			<script>
+		// Create an instance of Meny
+		var meny = Meny.create({
+			// The element that will be animated in from off screen
+			menuElement: document.querySelector( '.meny' ),
+			// The contents that gets pushed aside while Meny is active
+			contentsElement: document.querySelector( '.contents' ),
+			// [optional] The alignment of the menu (top/right/bottom/left)
+			position: 'top',
+			// [optional] The height of the menu (when using top/bottom position)
+			height: 85,
+			// [optional] The width of the menu (when using left/right position)
+			width: 260,
+			// [optional] Distance from mouse (in pixels) when menu should open
+			threshold: 50,
+		});
+		
+		$(document).ready(function() {
+			// init row expansion listener
+			try {
+			jsoftware95.rowExpansion(PF('dataTableWV'));
+			} catch(e) {
+				console.log('ops, could not init row expansion listener');
+			}
+		});
+		$(window).trigger('load');
+		</script>
+
+		</p:outputPanel>
+	</h:body>
+</f:view>
+</html>

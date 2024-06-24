@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:param name="title" value="#{blog.title}" />
+		<h:outputScript library="js" name="iframeResizer.min.js" />
+
+		<h:form>
+			<p:toolbar rendered="#{meta.principalInAdminRole}"
+				styleClass="mainHeader">
+				<f:facet name="left">
+					<p:button value="#{blog.newPost}" outcome="newPost"
+						icon="fa fa-plus-circle" styleClass="wideIcon" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:panel styleClass="center vcenter styled"
+				header="#{blog.emptyBlog}"
+				rendered="#{meta.principalInAdminRole? empty postsView.posts and empty postsView.drafts : empty postsView.posts}">
+				<h:outputText value="#{blog.noPostsYet}" />
+			</p:panel>
+
+			<ui:repeat var="post" varStatus="row" value="#{postsView.posts}">
+				<p:panel
+					styleClass="#{meta.principalInAdminRole? 'mainBody' : 'mainPage'} whitePanel"
+					header="#{post.title}">
+					<p:panelGrid columns="2" layout="grid"
+						styleClass="ui-panelgrid-blank">
+
+						<p:graphicImage value="#{meta.getFileURI(post.thumbnail.fileID)}"
+							width="100%" height="auto"
+							rendered="#{row.even and not empty post.thumbnail}" />
+
+						<!-- 						<iframe src="#{postsView.getIntroURI(post.blogID)}" -->
+						<!-- 							class="post output" /> -->
+						<h:outputText value="#{post.intro}" escape="false" />
+
+						<p:graphicImage value="#{meta.getFileURI(post.thumbnail.fileID)}"
+							width="100%" height="auto"
+							rendered="#{row.odd and not empty post.thumbnail}" />
+
+					</p:panelGrid>
+
+					<f:facet name="footer">
+						<h:panelGroup layout="block" styleClass="relative">
+							<h:outputText value="#{post.date}" styleClass="smallHint toLeft" />
+							<p:button value="#{blog.readMore}" outcome="blog"
+								icon="fa fa-file-text">
+								<f:param name="blog" value="#{post.blogID}" />
+							</p:button>
+							<p:button icon="fa fa-edit" value="#{blog.edit}"
+								outcome="newPost" rendered="#{meta.principalInAdminRole}">
+								<f:param name="draft" value="#{post.blogID}" />
+							</p:button>
+							<p:commandButton icon="fa fa-trash" value="#{general.remove}"
+								actionListener="#{postsView.delete(post.blogID)}"
+								rendered="#{meta.principalInAdminRole}" update="@form" />
+						</h:panelGroup>
+					</f:facet>
+				</p:panel>
+			</ui:repeat>
+
+			<h:panelGroup rendered="#{meta.principalInAdminRole}">
+				<ui:repeat var="post" varStatus="row" value="#{postsView.drafts}">
+					<p:panel
+						styleClass="mainBody whitePanel yellowHeader yellowBorder yellowState"
+						header="#{blog.draft}#{': '}#{post.title}">
+						<p:panelGrid columns="2" layout="grid"
+							styleClass="ui-panelgrid-blank">
+
+							<p:graphicImage value="#{meta.getFileURI(post.thumbnail.fileID)}"
+								width="100%" height="auto"
+								rendered="#{((row.index + postsView.posts.size()) % 2 == 0) and not empty post.thumbnail}" />
+
+							<h:panelGroup>
+								<iframe src="#{postsView.getIntroURI(post.blogID)}"
+									class="post output" />
+							</h:panelGroup>
+
+							<p:graphicImage value="#{meta.getFileURI(post.thumbnail.fileID)}"
+								width="100%" height="auto"
+								rendered="#{((row.index + postsView.posts.size()) % 2 == 1) and not empty post.thumbnail}" />
+
+						</p:panelGrid>
+
+						<f:facet name="footer">
+							<h:panelGroup layout="block" styleClass="relative">
+								<h:outputText value="#{post.date}" styleClass="smallHint toLeft" />
+								<p:button icon="fa fa-file-text" value="#{blog.readMore}"
+									outcome="blog">
+									<f:param name="blog" value="#{post.blogID}" />
+								</p:button>
+								<p:button icon="fa fa-edit" value="#{blog.edit}"
+									outcome="newPost" rendered="#{meta.principalInAdminRole}">
+									<f:param name="draft" value="#{post.blogID}" />
+								</p:button>
+								<p:commandButton icon="fa fa-trash" value="#{general.remove}"
+									actionListener="#{postsView.delete(post.blogID)}"
+									rendered="#{meta.principalInAdminRole}" update="@form" />
+							</h:panelGroup>
+						</f:facet>
+					</p:panel>
+				</ui:repeat>
+			</h:panelGroup>
+			<p:separator />
+			<h:outputScript>iFrameResize({log: true}, '.post')</h:outputScript>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

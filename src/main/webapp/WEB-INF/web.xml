@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd ">
+
+    <!-- HTTPS configuration -->
+    <!--<security-constraint>-->
+        <!--<web-resource-collection>-->
+            <!--<web-resource-name>all pages</web-resource-name>-->
+            <!--<url-pattern>/*</url-pattern>-->
+        <!--</web-resource-collection>-->
+        <!--<user-data-constraint>-->
+            <!--<description>using HTTPS protocol</description>-->
+            <!--<transport-guarantee>CONFIDENTIAL</transport-guarantee>-->
+        <!--</user-data-constraint>-->
+    <!--</security-constraint>-->
+
+    <!-- application parameters -->
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+        <param-value>/WEB-INF/jsoftware.taglib.xml</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>start</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+        <param-value>6LdELxAUAAAAAN6JdZ8YyOZIonJkUtwe3siuj97k</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+        <param-value>6LdELxAUAAAAANINi5l5pcZ1TVAOzZxZRDiwr6VR</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.UPLOADER</param-name>
+        <param-value>native</param-value>
+    </context-param>
+
+    <!-- end users parameters -->
+    <context-param>
+        <description>general description of this web site</description>
+        <param-name>com.rhcloud.cervex_jsoftware95.description</param-name>
+        <param-value>Are you looking for a modern solution to your enterprise
+            management problems? we can help!
+        </param-value>
+    </context-param>
+
+    <context-param>
+        <description>international phone number of company</description>
+        <param-name>com.rhcloud.cervex_jsoftware95.phoneNumber</param-name>
+        <param-value>+213 34 39 23 82</param-value>
+    </context-param>
+
+    <context-param>
+        <description>URL of phone number 034 39 23 82</description>
+        <param-name>com.rhcloud.cervex_jsoftware95.phoneNumberURL</param-name>
+        <param-value>tel:+21334392382</param-value>
+    </context-param>
+
+    <context-param>
+        <description>URL to the address of company on google maps</description>
+        <param-name>com.rhcloud.cervex_jsoftware95.addressOnGoogleMaps</param-name>
+        <param-value>https://www.google.com/maps/place/Hopital/@36.492817,5.274785,19z/data=!4m5!3m4!1s0x0:0xfe495a6798e5fa0c!8m2!3d36.4937656!4d5.2772338
+        </param-value>
+    </context-param>
+
+    <context-param>
+        <description>email of company</description>
+        <param-name>com.rhcloud.cervex_jsoftware95.email</param-name>
+        <param-value>cervex@yahoo.com</param-value>
+    </context-param>
+
+    <context-param>
+        <description>Facebook page of the company</description>
+        <param-name>com.rhcloud.cervex_jsoftware95.facebookPage</param-name>
+        <param-value>www.facebook.com/idrisellam</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <!-- server configuration -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Push Servlet</servlet-name>
+        <servlet-class>org.primefaces.push.PushServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Push Servlet</servlet-name>
+        <url-pattern>/primepush/*</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>home.xhtml</welcome-file>
+    </welcome-file-list>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>secured pages</web-resource-name>
+            <url-pattern>/secured/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>pages for users</web-resource-name>
+            <url-pattern>/user/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>pages for administrator</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.xhtml?lazy=off</form-login-page>
+            <form-error-page>/login.xhtml?lazy=off</form-error-page>
+        </form-login-config>
+    </login-config>
+
+    <security-role>
+        <description>Has the standard privilege plus being able manage
+            articles and users accounts
+        </description>
+        <role-name>admin</role-name>
+    </security-role>
+
+    <security-role>
+        <description>Has the standard privilege and also can apply for an
+            article, post a feedback
+        </description>
+        <role-name>user</role-name>
+    </security-role>
+
+    <filter>
+        <display-name>FacesFilter</display-name>
+        <filter-name>FacesFilter</filter-name>
+        <filter-class>com.rhcloud.cervex_jsoftware95.control.FacesFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>FacesFilter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error/forbidden.xhtml?lazy=off</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/notFound.xhtml?lazy=off</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/error/general.xhtml</location>
+    </error-page>
+
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>font/eot</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>font/woff</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>font/ttf</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>svg</extension>
+        <mime-type>image/svg+xml</mime-type>
+    </mime-mapping>
+
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
+
+</web-app>

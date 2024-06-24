@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+	<ui:composition template="/templates/layout.xhtml">
+		<ui:param name="title" value="#{article.allArticles}" />
+		<ui:param name="wrapperClass" value="communicationPage" />
+
+		<h:form>
+			<p:panel id="articlesPanel" header="#{article.allArticles}"
+				styleClass="mainPage styled">
+				<p:blockUI block="articlesPanel" trigger="deleteButton updateButton">
+					<object type="image/svg+xml"
+						data="#{resource['images:cervexLoading.svg']}" width="64"
+						height="64">
+						<h:graphicImage library="images" name="cervexLoading.gif" />
+					</object>
+					<br />
+					<h:outputText value="#{general.loading}" />
+				</p:blockUI>
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton id="deleteButton"
+							value="#{article.deleteArticle}" icon="fa fa-trash"
+							disabled="#{empty articlesManager.selectedArticle}"
+							actionListener="#{articlesManager.deleteArticle}" update="@form" />
+						<p:commandButton id="updateButton" value="#{article.update}"
+							icon="fa fa-long-arrow-up"
+							disabled="#{empty articlesManager.selectedArticle}"
+							actionListener="#{articlesManager.updateArticle}">
+							<p:ajax event="dialogReturn"
+								listener="#{articlesManager.onArticleUpdate}" update="@form" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+
+				<p:separator />
+
+				<p:dataTable var="oneArticle" value="#{articlesManager.articles}"
+					draggableColumns="true" emptyMessage="#{general.noData}"
+					selectionMode="single"
+					selection="#{articlesManager.selectedArticle}"
+					rowKey="#{oneArticle.articleID}" styleClass="centered">
+
+					<p:column width="17">
+						<p:rowToggler />
+					</p:column>
+
+					<p:column headerText="#{general.date}">
+						<h:outputText value="#{oneArticle.creationDate}" />
+					</p:column>
+
+					<p:column headerText="#{article.demandID}">
+						<h:outputText value="#{oneArticle.demand.demandID}" />
+					</p:column>
+
+					<p:column headerText="#{userMsg.username}">
+						<h:outputText value="#{oneArticle.user.username}" />
+					</p:column>
+
+					<p:column headerText="#{article.articleCode}">
+						<h:outputText value="#{oneArticle.articleID}" />
+					</p:column>
+
+					<p:rowExpansion styleClass="autoWidth">
+						<p>#{article.progress}</p>
+						<p:progressBar value="#{oneArticle.progress}" displayOnly="true" />
+						<p>#{article.version}</p>
+						<p>#{oneArticle.version}</p>
+					</p:rowExpansion>
+
+					<p:ajax event="rowSelect" update="@form" />
+				</p:dataTable>
+
+			</p:panel>
+			<p:separator />
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>
