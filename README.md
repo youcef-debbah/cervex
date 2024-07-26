@@ -1,11 +1,10 @@
-## The project context:
+## Project context:
 
 A newly founded software development company called Cervex wanted to create a website, mostly a simple static website, but since they had a dozen clients with relatively small projects (a few Microsoft Access apps, a simple desktop utility used by accountants, etc) they wanted a page to track the progress of each project and allowing each client to follow updates on their product without having to call the company daily.
 
-## The technologies used:
+## Why Java EE for a small web app:
 
-This was my first professional project in my career, as the only developer of this project, I had the opportunity to select the technology stack, I intentionally chose Java EE 7 (with MySQL as the database) over a simpler PHP framework because I wanted to gain practical experience with a technology widely used by the top Algerian companies.
-Other frameworks like Angular and React were already mainstream technologies by 2018, but they were still relatively niche frameworks within the Algerian market, that's why I dropped them.
+This was my first professional project in my career, as the only developer of this project, I had the opportunity to select the technology stack, I intentionally chose Java EE 7 (with MySQL as the database) over a simpler framework because I wanted to gain practical experience with a technology widely used by the top Algerian companies.
 
 ## Screenshots:
 
