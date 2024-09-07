@@ -20,3 +20,4 @@ target
 #*.js to be added in the next project
 !*.min.js
 
+logs/**/*.bat
